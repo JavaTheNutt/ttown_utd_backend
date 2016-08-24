@@ -1,0 +1,1 @@
+This project is a sample project. It is a RESTful API built using Spring 4. It talks to a MySql database using Spring Data JPA using Hibernate as an ORM provider. It is secured using signed JSON Web Tokens (JWS) and Spring Security.
