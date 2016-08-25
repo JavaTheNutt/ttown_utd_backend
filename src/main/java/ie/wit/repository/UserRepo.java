@@ -10,4 +10,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserRepo extends JpaRepository<UserEntity, Long>
 {
+  /**
+   * Find a user by their email address. Will only return one as email address must be unique
+   * @param String the email address
+   * @return Optional<UserEntity> Nullable user.
+   */
+  Optional<UserEntity> findByEmailAddress(String emailAddress);
 }
