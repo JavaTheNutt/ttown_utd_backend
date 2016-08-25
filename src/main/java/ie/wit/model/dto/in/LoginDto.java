@@ -33,8 +33,8 @@ public class LoginDto
 	
 	/**
 	 * Constructor
-	 * @param String emailAddress the email address
-	 * @param String password the users password
+	 * @param emailAddress the email address of the user attempting to log in
+	 * @param password the users password of the user attempting to log in
 	 */
 	public LoginDto(String emailAddress, String password){
 		this.emailAddress = emailAddress;
@@ -59,7 +59,7 @@ public class LoginDto
 	
 	/**
 	 * Mutator for emailAddress
-	 * @param String emailAddress
+	 * @param emailAddress the email address of the user attempting to log in
 	 */
 	public void setEmailAddress(String emailAddress){
 		this.emailAddress = emailAddress;
@@ -67,7 +67,7 @@ public class LoginDto
 	
 	/**
 	 * Mutator for password
-	 * @param String password
+	 * @param password the password that was provided by the user attempting to log in
 	 */
 	public void setPassword(String password){
 		this.password = password;
