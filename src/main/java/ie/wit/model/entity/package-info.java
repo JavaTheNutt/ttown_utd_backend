@@ -1,5 +1,5 @@
 /**
- * This is the package that will contain all of the model entities an Data Transfer Objects
+ * This package contains all of the Entities that JPA will persist to the database  
  *
  * @author Joe Wemyss
  */
