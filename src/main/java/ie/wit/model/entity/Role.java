@@ -36,7 +36,7 @@ public class Role
 	
 	/**
 	 * Constructor
-	 * @param String the name of the role
+	 * @param name the name of the role
 	 */
 	public Role(String name){
 		this.name = name;
@@ -53,7 +53,7 @@ public class Role
 
 	/**
 	 * Mutator for the Primary Key
-	 * @param Long the Primary key
+	 * @param id the Primary key
 	 */
 	public void setId(Long id)
 	{
@@ -71,7 +71,7 @@ public class Role
 
 	/**
 	 * Mutator for the role name
-	 * @param String the role name
+	 * @param name the role name
 	 */
 	public void setName(String name)
 	{
