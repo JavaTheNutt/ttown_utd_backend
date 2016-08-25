@@ -1,3 +1,8 @@
 ie.wit
+ie.wit.controller
+ie.wit.exceptions
+ie.wit.model.dto
+ie.wit.model.dto.in
 ie.wit.model.entity
 ie.wit.repository
+ie.wit.service

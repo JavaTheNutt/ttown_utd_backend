@@ -1,6 +1,7 @@
 package ie.wit.model.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +23,12 @@ public class UserEntity
 
 	/**
 	 * Users email address.
-	 * Must be unique
-	 * Cannot be null
+	 * Must be unique, cannot be null
 	 */
 	@Basic(optional = false)
 	@Column(name = "email_address", unique = true)
 	private String emailAddress;
-	
+
 	/**
 	 * Hash of the users password.
 	 * Cannot be null
@@ -36,8 +36,8 @@ public class UserEntity
 	@Basic(optional = false)
 	@Column(name = "password")
 	private String password;
-	
-	
+
+
 	/**
 	 * Users first name
 	 * Nullable
@@ -46,17 +46,18 @@ public class UserEntity
 	private String firstName;
 
 	/**
-	* Users surname
-	* Nullable
-	*/
+	 * Users surname
+	 * Nullable
+	 */
 	@Column(name = "surname")
 	private String surname;
 
 	/**
-	 * List of user roles 
+	 * List of user roles
+	 *
 	 * @see ie.wit.model.entity.Role Role
 	 */
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "User_roles",
 			joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
@@ -68,119 +69,55 @@ public class UserEntity
 	 * Default constructor.
 	 * Used by JPA to initialize the Entity
 	 */
-	protected UserEntity(){}
-	
+	protected UserEntity()
+	{
+	}
+
 	/**
-	 * Constructor
-	 * @param emailAddress the username.
-	 * @param password the hashed password.
+	 * Constructor.
+	 *
+	 * @param emailAddress the username
+	 * @param password     the hashed password
 	 */
-	public UserRoles(String emailAddress, String password){
+	public UserEntity(String emailAddress, String password)
+	{
 		this.emailAddress = emailAddress;
 		this.password = password;
 	}
 
 	/**
-	 * Getter for first name
-	 * @return Optional<String> containing the first name which may be null
+	 * Accessor for first name.
+	 *
+	 * @return optional string containing the first name which may be null
 	 */
-	public Optional<String> getFirstName(){
+	public Optional<String> getFirstName()
+	{
 		return Optional.ofNullable(firstName);
 	}
-	
-	/**
-	 * Getter for surname
-	 * @return Optional<String> containing the surname which may be null
-	 */
-	public Optional<String> getSurname(){
-		return Optional.ofNullable(surname);
-	}
-	
-	/**
-	 * Getter for Id
-	 * @return Long the primary key
-	 */
-	public Long getId()
-	{
-		return id;
-	}
 
 	/**
-	 * Getter for emailAddress
-	 * @return String the emailAddress
-	 */
-	public String getEmailAddress()
-	{
-		return emailAddress;
-	}
-	
-	/**
-	 * Getter for the password
-	 * @return String the hash of the password
-	 */
-	public String getPassword()
-	{
-		return password;
-	}
-
-	/**
-	 * Getter for the roles
-	 * @return List<Role> the list of Role
-	 */
-	public List<Role> getRoles()
-	{
-		return roles;
-	}
-	
-	/**
-	 * Add a Role to the list. If the list has not been instantiated, instantiate it.
-	 * @param role the role to be added
-	 */
-	public  void addRole(Role role){
-		if(roles == null){
-			roles = new ArrayList<>();
-		}
-		roles.add(role);
-	}
-
-	/**
-	 * Set the id. Not currently required by JPA, but provided to increase robustness
-	 * @param id the primary key
-	 */
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
-	/**
-	 * Set the email address of the user
-	 * @param emailAddress the email address
-	 */
-	public void setEmailAddress(String emailAddress)
-	{
-		this.emailAddress = emailAddress;
-	}
-	
-	/**
-	 * set the users password
-	 * @param password the password
-	 */
-	public void setPassword(String password)
-	{
-		this.password = password;
-	}
-
-	/**
-	 * set the users first name
+	 * set the users first name.
+	 *
 	 * @param firstName the users first name
 	 */
 	public void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
 	}
-	
+
 	/**
-	 * set the users surname
+	 * Accessor for surname.
+	 *
+	 * @return optional string containing the surname which may be null
+	 */
+	public Optional<String> getSurname()
+	{
+		return Optional.ofNullable(surname);
+	}
+
+	/**
+	 * set the users surname.
+	 *
 	 * @param surname the users surname
 	 */
 	public void setSurname(String surname)
@@ -189,12 +126,108 @@ public class UserEntity
 	}
 
 	/**
-	 * set the users roles
-	 * @param roles the list of roles to be set
-	 * @see ie.wit.model.entity.Role
+	 * Accessor for Id.
+	 *
+	 * @return the primary key
+	 */
+	public Long getId()
+	{
+		return id;
+	}
+
+	/**
+	 * Set the id.
+	 * Not currently required by JPA, but provided to increase robustness.
+	 *
+	 * @param id the primary key
+	 */
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	/**
+	 * Accessor for emailAddress.
+	 *
+	 * @return the emailAddress
+	 */
+	public String getEmailAddress()
+	{
+		return emailAddress;
+	}
+
+	/**
+	 * Set the email address of the user.
+	 *
+	 * @param emailAddress the email address
+	 */
+	public void setEmailAddress(String emailAddress)
+	{
+		this.emailAddress = emailAddress;
+	}
+
+	/**
+	 * Accessor for the password.
+	 *
+	 * @return the hash of the password
+	 */
+	public String getPassword()
+	{
+		return password;
+	}
+
+	/**
+	 * set the users password.
+	 *
+	 * @param password the password
+	 */
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+
+	/**
+	 * Accessor for the roles.
+	 *
+	 * @return the list of @link{Role}s
+	 */
+	public List<Role> getRoles()
+	{
+		return roles;
+	}
+
+	/**
+	 * set the users roles.
+	 *
+	 * @param roles the list of @link{Role}s to be set
 	 */
 	public void setRoles(List<Role> roles)
 	{
 		this.roles = roles;
+	}
+
+	/**
+	 * Add a @link{Role} to the list.
+	 * If the list has not been instantiated, instantiate it.
+	 *
+	 * @param role the role to be added
+	 */
+	public void addRole(Role role)
+	{
+		if (roles == null) {
+			roles = new ArrayList<>();
+		}
+		roles.add(role);
+	}
+
+	//// TODO: 25/08/2016 refactor class to hold a list of role names rather than roles
+	public boolean hasRole(String role)
+	{
+		for (Role role1 : roles) {
+			if (role1.getName().equalsIgnoreCase(role)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

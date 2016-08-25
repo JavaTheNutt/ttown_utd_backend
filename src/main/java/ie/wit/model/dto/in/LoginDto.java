@@ -1,75 +1,90 @@
 package ie.wit.model.dto.in;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+
 /**
- * This class represents the data that will be passed into the login controller when the user attempts to log in. Should match 
- * to a UserEntity
- * 
- * @see ie.wit.model.entity.UserEntity UserEntity
+ * This class represents the data that will be passed into the login controller when the user attempts to log in. Should match
+ * to a {@link ie.wit.model.entity.UserEntity}
+ *
  * @author Joe Wemyss
  */
 public class LoginDto
 {
 	/**
-	 * The email address that is passed in
+	 * The email address that is passed in.
 	 * Cannot be null or empty
 	 */
 	@NotNull
 	@NotEmpty
 	private String emailAddress;
-	
+
 	/**
-	 * The password that is passed in
-	 * Cannot be null or empty
+	 * The password that is passed in.
+	 * Cannot be null or empty.
 	 */
 	@NotNull
 	@NotEmpty
 	private String password;
-	
+
 	/**
-	 * The default constructor used by jackson to create the entity from JSON
+	 * The default constructor used by jackson to create the entity from JSON.
 	 */
-	public LoginDto(){
-		
+	public LoginDto()
+	{
+
 	}
-	
+
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
 	 * @param emailAddress the email address of the user attempting to log in
-	 * @param password the users password of the user attempting to log in
+	 * @param password     the users password of the user attempting to log in
 	 */
-	public LoginDto(String emailAddress, String password){
+	public LoginDto(String emailAddress, String password)
+	{
 		this.emailAddress = emailAddress;
 		this.password = password;
 	}
-	
+
 	/**
-	 * Accessor for emailAddress
-	 * @return String emailAddress
+	 * Accessor for emailAddress.
+	 *
+	 * @return the emailAddress
 	 */
-	public String getEmailAddress(){
+	public String getEmailAddress()
+	{
 		return emailAddress;
 	}
-	
+
 	/**
-	 * Accessor for password
-	 * @return String password
-	 */
-	public String getPassword(){
-		return password;
-	}
-	
-	/**
-	 * Mutator for emailAddress
+	 * Mutator for emailAddress.
+	 *
 	 * @param emailAddress the email address of the user attempting to log in
 	 */
-	public void setEmailAddress(String emailAddress){
+	public void setEmailAddress(String emailAddress)
+	{
 		this.emailAddress = emailAddress;
 	}
-	
+
 	/**
-	 * Mutator for password
+	 * Accessor for password.
+	 *
+	 * @return the password
+	 */
+	public String getPassword()
+	{
+		return password;
+	}
+
+	/**
+	 * Mutator for password.
+	 *
 	 * @param password the password that was provided by the user attempting to log in
 	 */
-	public void setPassword(String password){
+	public void setPassword(String password)
+	{
 		this.password = password;
 	}
 }

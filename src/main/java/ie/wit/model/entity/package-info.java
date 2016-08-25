@@ -1,5 +1,5 @@
 /**
- * This package contains all of the Entities that JPA will persist to the database  
+ * This package contains all of the Entities that JPA will persist to the database
  *
  * @author Joe Wemyss
  */

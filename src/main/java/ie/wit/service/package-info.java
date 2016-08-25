@@ -3,4 +3,4 @@
  *
  * @author Joe Wemyss
  */
-package ie.wit.model.service;
+package ie.wit.service;
