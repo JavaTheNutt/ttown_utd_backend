@@ -22,17 +22,40 @@ public class UserEntity
 
 	/**
 	 * Users email address.
+	 * Must be unique
+	 * Cannot be null
 	 */
 	@Basic(optional = false)
 	@Column(name = "email_address", unique = true)
 	private String emailAddress;
-
+	
+	/**
+	 * Hash of the users password.
+	 * Cannot be null
+	 */
+	@Basic(optional = false)
+	@Column(name = "password")
+	private String password;
+	
+	
+	/**
+	 * Users first name
+	 * Nullable
+	 */
 	@Column(name = "first_name")
 	private String firstName;
 
+	/**
+	* Users surname
+	* Nullable
+	*/
 	@Column(name = "surname")
 	private String surname;
 
+	/**
+	 * List of user roles 
+	 * @see ie.wit.model.entity.Role Role
+	 */
 	@ManyToMany()
 	@JoinTable(
 			name = "User_roles",
@@ -41,54 +64,134 @@ public class UserEntity
 	)
 	private List<Role> roles;
 
+	/**
+	 * Default constructor.
+	 * Used by JPA to initialize the Entity
+	 */
 	protected UserEntity(){}
+	
+	/**
+	 * Constructor
+	 * @param String the username.
+	 * @param String the hashed password.
+	 */
+	public UserRoles(String emailAddress, String password){
+		this.emailAddress = emailAddress;
+		this.password = password;
+	}
 
-
+	/**
+	 * Getter for first name
+	 * @return an Optional<String> containing the first name or null
+	 */
 	public Optional<String> getFirstName(){
 		return Optional.ofNullable(firstName);
 	}
+	
+	/**
+	 * Getter for surname
+	 * @return Optional<String> containing the surname or null
+	 */
 	public Optional<String> getSurname(){
 		return Optional.ofNullable(surname);
 	}
-
+	
+	/**
+	 * Getter for Id
+	 * @return Long the primary key
+	 */
 	public Long getId()
 	{
 		return id;
 	}
 
+	/**
+	 * Getter for emailAddress
+	 * @return String the emailAddress
+	 */
 	public String getEmailAddress()
 	{
 		return emailAddress;
 	}
+	
+	/**
+	 * Getter for the password
+	 * @return String the hash of the password
+	 */
+	public String getPassword()
+	{
+		return password;
+	}
 
+	/**
+	 * Getter for the roles
+	 * @return List<Role> the list of Role
+	 */
 	public List<Role> getRoles()
 	{
 		return roles;
 	}
+	
+	/**
+	 * Add a Role to the list. If the list has not been instantiated, instantiate it.
+	 * @param Role the role to be added
+	 */
 	public  void addRole(Role role){
+		if(roles == null){
+			roles = new ArrayList<>();
+		}
 		roles.add(role);
 	}
 
+	/**
+	 * Set the id. Not currently required by JPA, but provided to increase robustness
+	 * @param Long the primary key
+	 */
 	public void setId(Long id)
 	{
 		this.id = id;
 	}
 
+	/**
+	 * Set the email address of the user
+	 * @param String the email address
+	 */
 	public void setEmailAddress(String emailAddress)
 	{
 		this.emailAddress = emailAddress;
 	}
+	
+	/**
+	 * set the users password
+	 * @param String the password
+	 */
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
 
+	/**
+	 * set the users first name
+	 * @param String the users first name
+	 */
 	public void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
 	}
-
+	
+	/**
+	 * set the users surname
+	 * @param String the users surname
+	 */
 	public void setSurname(String surname)
 	{
 		this.surname = surname;
 	}
 
+	/**
+	 * set the users roles
+	 * @param List<Role> the list of roles to be set
+	 */
 	public void setRoles(List<Role> roles)
 	{
 		this.roles = roles;
