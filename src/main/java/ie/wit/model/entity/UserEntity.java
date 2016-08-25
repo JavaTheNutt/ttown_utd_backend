@@ -72,8 +72,8 @@ public class UserEntity
 	
 	/**
 	 * Constructor
-	 * @param String the username.
-	 * @param String the hashed password.
+	 * @param emailAddress the username.
+	 * @param password the hashed password.
 	 */
 	public UserRoles(String emailAddress, String password){
 		this.emailAddress = emailAddress;
@@ -82,7 +82,7 @@ public class UserEntity
 
 	/**
 	 * Getter for first name
-	 * @return an Optional<String> containing the first name or null
+	 * @return Optional<String> containing the first name which may be null
 	 */
 	public Optional<String> getFirstName(){
 		return Optional.ofNullable(firstName);
@@ -90,7 +90,7 @@ public class UserEntity
 	
 	/**
 	 * Getter for surname
-	 * @return Optional<String> containing the surname or null
+	 * @return Optional<String> containing the surname which may be null
 	 */
 	public Optional<String> getSurname(){
 		return Optional.ofNullable(surname);
@@ -134,7 +134,7 @@ public class UserEntity
 	
 	/**
 	 * Add a Role to the list. If the list has not been instantiated, instantiate it.
-	 * @param Role the role to be added
+	 * @param role the role to be added
 	 */
 	public  void addRole(Role role){
 		if(roles == null){
@@ -145,7 +145,7 @@ public class UserEntity
 
 	/**
 	 * Set the id. Not currently required by JPA, but provided to increase robustness
-	 * @param Long the primary key
+	 * @param id the primary key
 	 */
 	public void setId(Long id)
 	{
@@ -154,7 +154,7 @@ public class UserEntity
 
 	/**
 	 * Set the email address of the user
-	 * @param String the email address
+	 * @param emailAddress the email address
 	 */
 	public void setEmailAddress(String emailAddress)
 	{
@@ -163,7 +163,7 @@ public class UserEntity
 	
 	/**
 	 * set the users password
-	 * @param String the password
+	 * @param password the password
 	 */
 	public void setPassword(String password)
 	{
@@ -172,7 +172,7 @@ public class UserEntity
 
 	/**
 	 * set the users first name
-	 * @param String the users first name
+	 * @param firstName the users first name
 	 */
 	public void setFirstName(String firstName)
 	{
@@ -181,7 +181,7 @@ public class UserEntity
 	
 	/**
 	 * set the users surname
-	 * @param String the users surname
+	 * @param surname the users surname
 	 */
 	public void setSurname(String surname)
 	{
@@ -190,7 +190,8 @@ public class UserEntity
 
 	/**
 	 * set the users roles
-	 * @param List<Role> the list of roles to be set
+	 * @param roles the list of roles to be set
+	 * @see ie.wit.model.entity.Role
 	 */
 	public void setRoles(List<Role> roles)
 	{
