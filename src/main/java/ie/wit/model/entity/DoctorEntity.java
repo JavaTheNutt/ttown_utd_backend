@@ -5,3 +5,6 @@ package ie.wit.model.entity
 *
 * @author Joe Wemyss
 */
+public class DoctorEntity{
+  
+}
