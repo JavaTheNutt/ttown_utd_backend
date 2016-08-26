@@ -10,8 +10,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 public class UserNotFoundException extends RuntimeException
 {
+	/**
+	 * Default constructor with predefined message
+	 */
 	public UserNotFoundException()
 	{
 		super("User not found");
+	}
+	
+	/**
+	 * Constructor with message specified by the caller
+	 */
+	public UserNotFoundException(String message){
+		super(message);
 	}
 }
