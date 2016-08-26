@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author Joe Wemyss
  */
-@ResponseStatus(HttpStatus.UNAUTHORIZED)
 public class UserNotFoundException extends RuntimeException
 {
 	public UserNotFoundException()
