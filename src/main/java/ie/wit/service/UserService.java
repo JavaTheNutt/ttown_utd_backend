@@ -18,6 +18,10 @@ import java.util.List;
 public class UserService
 {
 	/**
+	 * The logger for this class
+	 */
+	Logger logger = LoggerFactory.getLogger(UserService.class);
+	/**
 	 * The reference to the user repository
 	 */
 	private UserRepo userRepo;
@@ -36,12 +40,28 @@ public class UserService
 	/**
 	 * Return all of the users.
 	 *
-	 * @return the list of users
+	 * @return  the list of users
 	 */
-
 	public List<UserEntity> getUsers()
 	{
 		return userRepo.findAll();
+	}
+	
+	/**
+	 * Return a single user based on their email address.
+	 * 
+	 * @param emailAddress  the users email address, which is unique in the database
+	 * @return  the requested user
+	 * @throws  an exception if the user is not found
+	 */
+	public UserEntity getOneUserByEmail(String emailAddress){
+		UserEntity user = userRepo.findByEmailAddress();
+		if(user == null){
+			logger.error("User with the email address " + emailAddress + " not found!");
+			throw new UserNotFoundException();
+		}
+		logger.info("User with the email address " + emailAddress + " found successfully");
+		return user;
 	}
 
 }
