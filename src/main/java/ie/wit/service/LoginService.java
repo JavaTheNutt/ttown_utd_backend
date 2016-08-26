@@ -43,4 +43,20 @@ public class LoginService
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
 	}
+	
+	/**
+	 * Validate if the users details are correct.
+	 * 
+	 * @param loginDetails  the login details passed by the client
+	 * @return  a boolean to denote if the login details are correct
+	 */
+	private boolean userValid(LoginDto loginDetails){
+		UserEntity user  = userService.findByEmailAddress(loginDetails.getEmailAddress());
+		if(user == null){
+			logger.error("User: " + loginDetails.getEmailAddress() + " is not contained in the database!")
+			throw new UserNotFoundException();
+		}
+		//fixme: encode login details password with bcrypt and compare salted hash of user entity
+		return false;
+	}
 }
