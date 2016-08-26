@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService
 {
+	/**
+	 * Logger for this class
+	 */
 	private Logger logger = LoggerFactory.getLogger(LoginService.class);
 	/**
 	 * Autowired instance of the userService.
@@ -30,5 +33,14 @@ public class LoginService
 		this.userService = userService;
 	}
 
-
+	/**
+	 * Take login details and verify.
+	 * 
+	 * @param loginDetails  the users login details to be verified
+	 * @return  A JWT to be appended to the response header
+	 */
+	public String login(LoginDto loginDetails){
+		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
+		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
+	}
 }
