@@ -1,5 +1,6 @@
-package ie.wit.service;
+package ie.wit.service.access;
 
+import ie.wit.exceptions.PasswordMismatchException;
 import ie.wit.model.dto.in.LoginDto;
 import ie.wit.model.entity.UserEntity;
 import org.slf4j.Logger;
@@ -30,14 +31,21 @@ public class LoginService
 	private UserService userService;
 
 	/**
+	 * Autowired reference to the hashing service
+	 */
+	private HashingService hashingService;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param userService instance of the {@link UserService}
+	 * @param userService  instance of the {@link UserService}
+	 * @param hashingService  instance of the {@link HashingService}
 	 */
 	@Autowired
-	public LoginService(UserService userService)
+	public LoginService(UserService userService, HashingService hashingService)
 	{
 		this.userService = userService;
+		this.hashingService = hashingService;
 	}
 
 	/**
@@ -50,6 +58,8 @@ public class LoginService
 	{
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
+
+
 		return "Enter JWT Here!!";
 	}
 
@@ -61,12 +71,12 @@ public class LoginService
 	 */
 	private boolean userValid(LoginDto loginDetails)
 	{
-		//get the user from the database.
-
-		//compare the two password and return the result.
-		return false;
+		UserEntity user = getUser(loginDetails.getEmailAddress());
+		if(!hashingService.checkPassword(loginDetails.getPassword(), user.getPassword())){
+			throw new PasswordMismatchException();
+		}
+		return true;
 	}
-
 
 	/**
 	 * Get a user based on their email address.

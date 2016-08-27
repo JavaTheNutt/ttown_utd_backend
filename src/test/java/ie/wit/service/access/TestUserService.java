@@ -1,6 +1,5 @@
-package ie.wit.service;
+package ie.wit.service.access;
 
-import ie.wit.exceptions.PasswordMismatchException;
 import ie.wit.model.entity.UserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,36 +9,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 /**
- * This test class will test the {@link ie.wit.service.UserService } 
- * 
+ * This will test the {@link UserService}.
+ *
  * @author Joe Wemyss
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestUserService
 {
-	/**
-	 * Reference to the {@link ie.wit.service.UserService } 
-	 */
 	@Autowired
 	private UserService userService;
 
-	/**
-	 * This will test {@link ie.wit.service.UserService#getUsers } 
-	 */
 	@Test
-	public void testGetAllUsers()
-	{
+	public void testGetAll(){
 		List<UserEntity> users = userService.getUsers();
-		assertFalse("Collection is empty", users.isEmpty());
-		assertTrue("User does not have role", users.get(0).hasRole("Admin"));
+		assertTrue("No Users", users.size() > 0);
 	}
 	@Test
-	public void testThrowException(){
-		throw new PasswordMismatchException();
+	public void testGetOne(){
+		UserEntity user = userService.getOneUserByEmail("joewemyss3@gmail.com");
+		assertNotNull("Object is null", user);
 	}
 }

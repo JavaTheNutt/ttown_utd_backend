@@ -1,4 +1,4 @@
-package ie.wit.service;
+package ie.wit.service.access;
 
 import ie.wit.exceptions.UserNotFoundException;
 import ie.wit.model.entity.UserEntity;
@@ -17,13 +17,12 @@ import java.util.List;
  * @see ie.wit.model.entity.UserEntity
  */
 @Service
-
-public class UserService
+class UserService
 {
 	/**
 	 * The logger for this class
 	 */
-	Logger logger = LoggerFactory.getLogger(UserService.class);
+	private Logger logger = LoggerFactory.getLogger(UserService.class);
 	/**
 	 * The reference to the user repository
 	 */
@@ -35,7 +34,7 @@ public class UserService
 	 * @param userRepo the user repository
 	 */
 	@Autowired
-	public UserService(UserRepo userRepo)
+	 UserService(UserRepo userRepo)
 	{
 		this.userRepo = userRepo;
 	}
@@ -45,8 +44,9 @@ public class UserService
 	 *
 	 * @return the list of users
 	 */
-	public List<UserEntity> getUsers()
+	 List<UserEntity> getUsers()
 	{
+		logger.info("UserService#getUsers called. " + userRepo.findAll().size() + " records found." );
 		return userRepo.findAll();
 	}
 
@@ -57,7 +57,7 @@ public class UserService
 	 * @return the requested user
 	 * @throws UserNotFoundException exception if the user is not found
 	 */
-	public UserEntity getOneUserByEmail(String emailAddress)
+	 UserEntity getOneUserByEmail(String emailAddress)
 	{
 		UserEntity user = userRepo.findByEmailAddress(emailAddress);
 		if (user == null) {
