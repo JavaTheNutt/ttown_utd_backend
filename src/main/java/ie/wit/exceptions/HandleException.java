@@ -25,14 +25,33 @@ public class HandleException
 	public ResponseEntity<ClientErrorInformation> handleUserNotFound(HttpServletRequest req, Exception e){
     	return handleUnauthorized(req, e);
 	}
-	
+
+	/**
+	 * Handle PasswordMismatchException.
+	 *
+	 * @param req  the request that triggered the exception
+	 * @param e  the exception that was thrown
+	 * @return  a response entity containing the exception
+	 */
 	@ExceptionHandler(PasswordMismatchException.class)
 	public ResponseEntity<ClientErrorInformation> handlePasswordMismatch(HttpServletRequest req, Exception e){
 		return handleUnauthorized(req, e);
 	}
-	
+
 	/**
-	 * Handle any exception that needs to throw a Status code 401.
+	 * General exception handler.
+	 *
+	 * @param req  the request that triggered the exception
+	 * @param e  the exception that was thrown
+	 * @return  a response entity containing the exception
+	 */
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ClientErrorInformation> handleException(HttpServletRequest req, Exception e){
+		return handleInternalServerError(req, e);
+	}
+
+	/**
+	 * Handle any exception that needs to throw a status code 401.
 	 * 
 	 * @param req  the request that triggered the exception
   	 * @param e  the exception that was thrown
@@ -41,6 +60,18 @@ public class HandleException
 	private ResponseEntity<ClientErrorInformation> handleUnauthorized(HttpServletRequest req, Exception e){
 		return handleException(req, e, HttpStatus.UNAUTHORIZED);
 	}
+
+	/**
+	 * Handle any exception that needs to throw a status code 500.
+	 *
+	 * @param req  the request that triggered the exception
+	 * @param e  the exception that was thrown
+	 * @return  a response entity containing the exception
+	 */
+	private ResponseEntity<ClientErrorInformation> handleInternalServerError(HttpServletRequest req, Exception e){
+		return handleException(req, e, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 	/**
 	 * Handle any exception.
 	 * 

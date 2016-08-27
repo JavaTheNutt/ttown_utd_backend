@@ -32,6 +32,7 @@ public class ClientErrorInformation
 		this.uri = uri;
 	}
 
+	// TODO: 27/08/2016 Format error message correctly
 	/**
 	 * Create the message.
 	 * @param e  The exception that was thrown
@@ -42,8 +43,48 @@ public class ClientErrorInformation
 	}
 
 	/**
+	 * Accessor for message
+	 *
+	 * @return  the message.
+	 */
+	public String getMessage()
+	{
+		return message;
+	}
+
+	/**
+	 * Mutator for message.
+	 *
+	 * @param message  the message
+	 */
+	public void setMessage(String message)
+	{
+		this.message = message;
+	}
+
+	/**
+	 * Accessor for uri.
+	 *
+	 * @return  the uri of the request that caused the exception
+	 */
+	public String getUri()
+	{
+		return uri;
+	}
+
+	/**
+	 * Mutator for message.
+	 *
+	 * @param uri  the uri of the request that caused the esception
+	 */
+	public void setUri(String uri)
+	{
+		this.uri = uri;
+	}
+
+	/**
 	 * Simple toString() method.
-	 * @return  The class in string form
+	 * @return  The class in string format
 	 */
 	@Override
 	public String toString()
