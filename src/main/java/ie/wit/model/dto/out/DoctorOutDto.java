@@ -1,5 +1,8 @@
 package ie.wit.model.dto.out;
 
+import javax.validation.constraints.NotNull;
+import java.util.Optional;
+
 /**
 * This will be the representation of a doctor that will be sent out via the doctor endpoint
 *

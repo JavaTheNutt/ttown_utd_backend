@@ -1,7 +1,10 @@
 package ie.wit.service;
 
+import ie.wit.exceptions.UserNotFoundException;
 import ie.wit.model.entity.UserEntity;
 import ie.wit.repository.UserRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,12 +55,12 @@ public class UserService
 	 * 
 	 * @param emailAddress  the users email address, which is unique in the database
 	 * @return  the requested user
-	 * @throws  an exception if the user is not found
+	 * @throws  UserNotFoundException exception if the user is not found
 	 */
 	public UserEntity getOneUserByEmail(String emailAddress){
-		UserEntity user = userRepo.findByEmailAddress();
+		UserEntity user = userRepo.findByEmailAddress(emailAddress);
 		if(user == null){
-			logger.error("User with the email address " + emailAddress + " not found!");
+			logger.error("UserService#getOneByEmail() with email" + emailAddress + " not found!!");
 			throw new UserNotFoundException();
 		}
 		logger.info("User with the email address " + emailAddress + " found successfully");

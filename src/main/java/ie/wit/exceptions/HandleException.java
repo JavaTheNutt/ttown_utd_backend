@@ -1,10 +1,18 @@
-package ie.wit.exceptions
+package ie.wit.exceptions;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * This class handles exceptions, wraps them in a ResponseEntity and returns them to the client
  * 
  * @author Joe Wemyss
  */
-public class ExceptionHandler{
+public class HandleException
+{
   
   	/**
   	 * Handle UserNotFoundException
@@ -18,13 +26,6 @@ public class ExceptionHandler{
     	return handleUnauthorized(req, e);
 	}
 	
-	/**
-  	 * Handle PasswordMismatchException.
-  	 * 
-  	 * @param req  the request that triggered the exception
-  	 * @param e  the exception that was thrown
-  	 * @return  a response entity containing the exception
-  	 */
 	@ExceptionHandler(PasswordMismatchException.class)
 	public ResponseEntity<ClientErrorInformation> handlePasswordMismatch(HttpServletRequest req, Exception e){
 		return handleUnauthorized(req, e);
@@ -49,7 +50,7 @@ public class ExceptionHandler{
   	 * @return  a response entity containing the exception
 	 */
 	private ResponseEntity<ClientErrorInformation> handleException(HttpServletRequest req, Exception e, HttpStatus status){
-		ClientErrorInformation error = new ClientErrorInformation(e.toString(), req.getRequestURI());
-    	return new ResponseEntity<ClientErrorInformation>(error, status);
+		ClientErrorInformation error = new ClientErrorInformation(e, req.getRequestURI());
+    	return new ResponseEntity<>(error, status);
 	}
 }

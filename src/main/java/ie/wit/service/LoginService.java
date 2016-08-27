@@ -1,5 +1,8 @@
 package ie.wit.service;
 
+import ie.wit.exceptions.UserNotFoundException;
+import ie.wit.model.dto.in.LoginDto;
+import ie.wit.model.entity.UserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,7 @@ public class LoginService
 	public String login(LoginDto loginDetails){
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
+		return "Enter JWT Here!!";
 	}
 	
 	/**
@@ -51,9 +55,9 @@ public class LoginService
 	 * @return  a boolean to denote if the login details are correct
 	 */
 	private boolean userValid(LoginDto loginDetails){
-		UserEntity user  = userService.findByEmailAddress(loginDetails.getEmailAddress());
+		UserEntity user  = userService.getOneUserByEmail(loginDetails.getEmailAddress());
 		if(user == null){
-			logger.error("User: " + loginDetails.getEmailAddress() + " is not contained in the database!")
+			logger.error("User: " + loginDetails.getEmailAddress() + " is not contained in the database!");
 			throw new UserNotFoundException();
 		}
 		//fixme: encode login details password with bcrypt and compare salted hash of user entity
