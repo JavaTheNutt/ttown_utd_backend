@@ -1,5 +1,6 @@
 package ie.wit.service;
 
+import ie.wit.exceptions.PasswordMismatchException;
 import ie.wit.model.entity.UserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +32,14 @@ public class TestUserService
 	 * This will test {@link ie.wit.service.UserService#getUsers } 
 	 */
 	@Test
-	public void TestGetAllUsers()
+	public void testGetAllUsers()
 	{
 		List<UserEntity> users = userService.getUsers();
 		assertFalse("Collection is empty", users.isEmpty());
 		assertTrue("User does not have role", users.get(0).hasRole("Admin"));
+	}
+	@Test
+	public void testThrowException(){
+		throw new PasswordMismatchException();
 	}
 }

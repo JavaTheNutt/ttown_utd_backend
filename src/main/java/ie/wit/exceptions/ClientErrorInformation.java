@@ -23,29 +23,34 @@ public class ClientErrorInformation
 
 	/**
 	 * Constructor.
-	 * @param e  The Exception that was thrown
-	 * @param uri  The request uri that caused the exception
+	 *
+	 * @param e   The Exception that was thrown
+	 * @param uri The request uri that caused the exception
 	 */
-	public ClientErrorInformation(Exception e, String uri){
+	public ClientErrorInformation(Exception e, String uri)
+	{
 		this.exception = e;
 		this.message = createErrorMessage(e);
 		this.uri = uri;
 	}
 
 	// TODO: 27/08/2016 Format error message correctly
+
 	/**
 	 * Create the message.
-	 * @param e  The exception that was thrown
-	 * @return  The message
+	 *
+	 * @param e The exception that was thrown
+	 * @return The message
 	 */
-	private String createErrorMessage(Exception e){
+	private String createErrorMessage(Exception e)
+	{
 		return e.toString();
 	}
 
 	/**
 	 * Accessor for message
 	 *
-	 * @return  the message.
+	 * @return the message.
 	 */
 	public String getMessage()
 	{
@@ -55,7 +60,7 @@ public class ClientErrorInformation
 	/**
 	 * Mutator for message.
 	 *
-	 * @param message  the message
+	 * @param message the message
 	 */
 	public void setMessage(String message)
 	{
@@ -65,7 +70,7 @@ public class ClientErrorInformation
 	/**
 	 * Accessor for uri.
 	 *
-	 * @return  the uri of the request that caused the exception
+	 * @return the uri of the request that caused the exception
 	 */
 	public String getUri()
 	{
@@ -75,7 +80,7 @@ public class ClientErrorInformation
 	/**
 	 * Mutator for message.
 	 *
-	 * @param uri  the uri of the request that caused the esception
+	 * @param uri the uri of the request that caused the esception
 	 */
 	public void setUri(String uri)
 	{
@@ -84,7 +89,8 @@ public class ClientErrorInformation
 
 	/**
 	 * Simple toString() method.
-	 * @return  The class in string format
+	 *
+	 * @return The class in string format
 	 */
 	@Override
 	public String toString()

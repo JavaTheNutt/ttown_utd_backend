@@ -43,23 +43,24 @@ public class UserService
 	/**
 	 * Return all of the users.
 	 *
-	 * @return  the list of users
+	 * @return the list of users
 	 */
 	public List<UserEntity> getUsers()
 	{
 		return userRepo.findAll();
 	}
-	
+
 	/**
 	 * Return a single user based on their email address.
-	 * 
-	 * @param emailAddress  the users email address, which is unique in the database
-	 * @return  the requested user
-	 * @throws  UserNotFoundException exception if the user is not found
+	 *
+	 * @param emailAddress the users email address, which is unique in the database
+	 * @return the requested user
+	 * @throws UserNotFoundException exception if the user is not found
 	 */
-	public UserEntity getOneUserByEmail(String emailAddress){
+	public UserEntity getOneUserByEmail(String emailAddress)
+	{
 		UserEntity user = userRepo.findByEmailAddress(emailAddress);
-		if(user == null){
+		if (user == null) {
 			logger.error("UserService#getOneByEmail() with email" + emailAddress + " not found!!");
 			throw new UserNotFoundException();
 		}
