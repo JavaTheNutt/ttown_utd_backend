@@ -18,4 +18,5 @@ public interface UserRepo extends JpaRepository<UserEntity, Long>
 	 * @return Nullable user.
 	 */
 	UserEntity findByEmailAddress(String emailAddress);
+
 }

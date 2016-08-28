@@ -54,6 +54,7 @@ class JwtService
 	 * @return a JWT
 	 */
 	private String createJwt(String username, String userRole){
+		logger.debug("Creating JWT");
 		byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(secret);
 		long nowMillis = System.currentTimeMillis();
 		long expMillis = nowMillis + (60000 * 60);
@@ -87,8 +88,11 @@ class JwtService
 	 * @return true if user has admin role, false otherwise
 	 */
 	private boolean validateAdminClaim(String jwt){
+		logger.debug("Checking claims");
 		Claims claims = parseJwt(jwt);
-		return validateJwt(claims) && isAdmin(claims);
+		boolean jwtValid = validateJwt(claims);
+		boolean isAdmin = isAdmin(claims);
+		return jwtValid && isAdmin;
  	}
 
 	/**
@@ -98,7 +102,8 @@ class JwtService
 	 * @return true if user has admin role, false otherwise
 	 */
 	private boolean isAdmin(Claims claims){
-		return claims.get("Authentication").equals("Admin");
+		logger.debug("Checking for admin authentication");
+		return claims.get("Authentication").equals("ADMIN");
 	}
 
 	/**
@@ -109,6 +114,7 @@ class JwtService
 	 */
 	private boolean validateJwt(Claims claims){
 		long nowMillis = System.currentTimeMillis();
+		logger.debug("Checking jwt validity");
 		return claims.getIssuer().equals("JavaTheNutt") && claims.getExpiration().after(new Date(nowMillis));
 	}
 
@@ -118,6 +124,7 @@ class JwtService
 	 * @return the claims in key => value pairs
 	 */
 	private Claims parseJwt(String jwt){
+		logger.debug("Parsing JWT");
 		return Jwts.parser()
 				.setSigningKey(DatatypeConverter.parseBase64Binary(secret)).parseClaimsJws(jwt).getBody();
 	}

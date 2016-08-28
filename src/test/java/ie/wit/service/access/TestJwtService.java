@@ -10,7 +10,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by joewe on 27/08/2016.
+ * This class tests JWT generation.
+ *
+ * @author Joe Wemyss
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,7 +28,7 @@ public class TestJwtService
 	}
 	@Test
 	public void testValidateJwt(){
-		String jwt = jwtService.requestJwt("joewemyss3@gmail.com", "Admin");
+		String jwt = jwtService.requestJwt("joewemyss3@gmail.com", "ADMIN");
 		assertTrue("JWT not valid", jwtService.validateAdmin(jwt));
 	}
 }

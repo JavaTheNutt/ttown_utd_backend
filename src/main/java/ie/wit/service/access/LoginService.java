@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * This service will validate user logins and defer to another service to create the JWT for authentication
  *
@@ -67,18 +69,23 @@ public class LoginService
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		UserEntity user = getUser(loginDetails.getEmailAddress());
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
-		return userValid(user) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()): "Not Authorized";
+		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()): "Not Authorized";
 	}
+	public boolean validateJwt(String jwt){
+		return jwtService.validateAdmin(jwt);
+	}
+
 
 	/**
 	 * Validate if the users details are correct.
 	 *
-	 * @param user the login details passed by the client
+	 * @param user the user retrieved from the database
+	 * @param plaintext the plaintext password to be compared
 	 * @return a boolean to denote if the login details are correct
 	 */
-	private boolean userValid(UserEntity user)
+	private boolean userValid(UserEntity user, String plaintext)
 	{
-		if(!hashingService.checkPassword(user.getPassword(), user.getPassword())){
+		if(!hashingService.checkPassword(plaintext, user.getPassword())){
 			throw new PasswordMismatchException();
 		}
 		return true;

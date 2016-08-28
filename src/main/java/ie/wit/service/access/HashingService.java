@@ -1,5 +1,7 @@
 package ie.wit.service.access;
 
+import org.apache.log4j.spi.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,10 @@ import org.springframework.stereotype.Service;
 @Service
 class HashingService
 {
+	/**
+	 * Logger for this class
+	 */
+	private Logger logger = org.slf4j.LoggerFactory.getLogger(LoginService.class);
 	private static int workload = 12;
 	/**
 	 * This compares two passwords and returns a boolean.
@@ -23,6 +29,8 @@ class HashingService
 		if(null == storedHash || !storedHash.startsWith("$2a$")) {
 			throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
 		}
+		logger.debug("Plaintext: " + passwordPlaintext);
+		logger.debug("hashed: " + storedHash);
 		return(BCrypt.checkpw(passwordPlaintext, storedHash));
 	}
 
