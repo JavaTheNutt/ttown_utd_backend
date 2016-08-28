@@ -1,5 +1,7 @@
 package ie.wit.exceptions;
 
+import io.jsonwebtoken.InvalidClaimException;
+import io.jsonwebtoken.MissingClaimException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HandleException
 {
-	Logger logger = LoggerFactory.getLogger(HandleException.class);
+	private Logger logger = LoggerFactory.getLogger(HandleException.class);
 
 	/**
 	 * Handle UserNotFoundException
@@ -42,6 +44,32 @@ public class HandleException
 	public ResponseEntity<ClientErrorInformation> handlePasswordMismatch(HttpServletRequest req, Exception e)
 	{
 		logger.debug("Warning, PasswordMismatchException thrown. ");
+		return handleUnauthorized(req, e);
+	}
+
+	/**
+	 * Handle InvalidClaimException.
+	 *
+	 * @param req the request that triggered the exception
+	 * @param e   the exception that was thrown
+	 * @return a response entity containing the exception
+	 */
+	@ExceptionHandler(InvalidClaimException.class)
+	public ResponseEntity<ClientErrorInformation> handleInvalidClaim(HttpServletRequest req, Exception e)
+	{
+		logger.debug("Warning, InvalidClaimException thrown. ");
+		return handleUnauthorized(req, e);
+	}
+	/**
+	 * Handle MissingClaimException.
+	 *
+	 * @param req the request that triggered the exception
+	 * @param e   the exception that was thrown
+	 * @return a response entity containing the exception
+	 */
+	@ExceptionHandler(MissingClaimException.class)
+	public ResponseEntity<ClientErrorInformation> handleMissingClaim(HttpServletRequest req, Exception e){
+		logger.debug("Warning, MissingClaimException thrown. ");
 		return handleUnauthorized(req, e);
 	}
 
