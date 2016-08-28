@@ -1,4 +1,4 @@
-package ie.wit.exceptions;
+package ie.wit.service.util.exceptions.custom_exceptions;
 
 /**
  * This Exception will be thrown if a user requested is not found in the database

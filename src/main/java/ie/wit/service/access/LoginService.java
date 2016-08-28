@@ -1,6 +1,6 @@
 package ie.wit.service.access;
 
-import ie.wit.exceptions.PasswordMismatchException;
+import ie.wit.service.util.exceptions.custom_exceptions.PasswordMismatchException;
 import ie.wit.model.dto.in.LoginDto;
 import ie.wit.model.entity.UserEntity;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package ie.wit.service.access;
 
-import ie.wit.exceptions.UserNotFoundException;
+import ie.wit.service.util.exceptions.custom_exceptions.UserNotFoundException;
 import ie.wit.model.entity.UserEntity;
 import ie.wit.repository.UserRepo;
 import org.slf4j.Logger;

@@ -1,5 +1,7 @@
-package ie.wit.exceptions;
+package ie.wit.service.util.exceptions.handle;
 
+import ie.wit.service.util.exceptions.custom_exceptions.PasswordMismatchException;
+import ie.wit.service.util.exceptions.custom_exceptions.UserNotFoundException;
 import io.jsonwebtoken.InvalidClaimException;
 import io.jsonwebtoken.MissingClaimException;
 import org.slf4j.Logger;

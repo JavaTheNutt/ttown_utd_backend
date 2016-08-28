@@ -1,4 +1,4 @@
-package ie.wit.exceptions;
+package ie.wit.service.util.exceptions.custom_exceptions;
 
 /**
  * This class represents the exception that will be thrown if the password a user provides does not match the expected.

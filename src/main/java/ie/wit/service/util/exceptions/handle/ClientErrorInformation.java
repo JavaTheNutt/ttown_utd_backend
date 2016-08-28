@@ -1,4 +1,4 @@
-package ie.wit.exceptions;
+package ie.wit.service.util.exceptions.handle;
 
 /**
  * This class will be a wrapper for that will contain information about exceptions.
