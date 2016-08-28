@@ -56,12 +56,14 @@ class JwtService
 	private String createJwt(String username, String userRole){
 		byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(secret);
 		long nowMillis = System.currentTimeMillis();
+		long expMillis = nowMillis + (60000 * 60);
 		Date now = new Date(nowMillis);
 		String jwt = Jwts.builder()
 				.setSubject(username)
 				.claim("Authentication", userRole)
 				.setIssuer("JavaTheNutt")
 				.setIssuedAt(now)
+				.setExpiration(new Date(expMillis))
 				.signWith(signatureAlgorithm, secretKeyBytes)
 				.compact();
 		return jwt;
@@ -106,8 +108,8 @@ class JwtService
 	 * @return true if jwt is valid, false otherwise
 	 */
 	private boolean validateJwt(Claims claims){
-		return claims.getIssuer().equals("JavaTheNutt");
-
+		long nowMillis = System.currentTimeMillis();
+		return claims.getIssuer().equals("JavaTheNutt") && claims.getExpiration().after(new Date(nowMillis));
 	}
 
 	/**

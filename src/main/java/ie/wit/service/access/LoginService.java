@@ -31,21 +31,28 @@ public class LoginService
 	private UserService userService;
 
 	/**
-	 * Autowired reference to the hashing service
+	 * Autowired reference to the hashing service.
 	 */
 	private HashingService hashingService;
+
+	/**
+	 * Autowired reference to the jwt service.
+	 */
+	private JwtService jwtService;
 
 	/**
 	 * Constructor.
 	 *
 	 * @param userService  instance of the {@link UserService}
 	 * @param hashingService  instance of the {@link HashingService}
+	 * @param jwtService  instance of {@link JwtService}   
 	 */
 	@Autowired
-	public LoginService(UserService userService, HashingService hashingService)
+	public LoginService(UserService userService, HashingService hashingService, JwtService jwtService)
 	{
 		this.userService = userService;
 		this.hashingService = hashingService;
+		this.jwtService = jwtService;
 	}
 
 	/**
@@ -56,23 +63,22 @@ public class LoginService
 	 */
 	public String login(LoginDto loginDetails)
 	{
+		// TODO: 28/08/2016 TEST!!!!!!!!!! 
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
+		UserEntity user = getUser(loginDetails.getEmailAddress());
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
-
-
-		return "Enter JWT Here!!";
+		return userValid(user) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()): "Not Authorized";
 	}
 
 	/**
 	 * Validate if the users details are correct.
 	 *
-	 * @param loginDetails the login details passed by the client
+	 * @param user the login details passed by the client
 	 * @return a boolean to denote if the login details are correct
 	 */
-	private boolean userValid(LoginDto loginDetails)
+	private boolean userValid(UserEntity user)
 	{
-		UserEntity user = getUser(loginDetails.getEmailAddress());
-		if(!hashingService.checkPassword(loginDetails.getPassword(), user.getPassword())){
+		if(!hashingService.checkPassword(user.getPassword(), user.getPassword())){
 			throw new PasswordMismatchException();
 		}
 		return true;
