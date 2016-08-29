@@ -1,15 +1,13 @@
 package ie.wit.service.access;
 
-import ie.wit.service.util.exceptions.custom_exceptions.PasswordMismatchException;
 import ie.wit.model.dto.in.LoginDto;
 import ie.wit.model.entity.UserEntity;
+import ie.wit.service.util.exceptions.custom_exceptions.PasswordMismatchException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 /**
  * This service will validate user logins and defer to another service to create the JWT for authentication
@@ -45,9 +43,9 @@ public class LoginService
 	/**
 	 * Constructor.
 	 *
-	 * @param userService  instance of the {@link UserService}
-	 * @param hashingService  instance of the {@link HashingService}
-	 * @param jwtService  instance of {@link JwtService}   
+	 * @param userService    instance of the {@link UserService}
+	 * @param hashingService instance of the {@link HashingService}
+	 * @param jwtService     instance of {@link JwtService}
 	 */
 	@Autowired
 	public LoginService(UserService userService, HashingService hashingService, JwtService jwtService)
@@ -70,37 +68,37 @@ public class LoginService
 		UserEntity user = getUser(loginDetails.getEmailAddress());
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
 		// FIXME: edit JWT service to accept a collection of roles instead of just one
-		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()): "Not Authorized";
+		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()) : "Not Authorized";
 	}
-	
+
 	/**
 	 * This method will take a JWT in String form and will validate whether the user that sent it is an admin.
-	 * 
-	 * @param jwt  the jwt to be validated
-	 * @return  true if the jwt specifies that the user is an admin, false otherwise
+	 *
+	 * @param jwt the jwt to be validated
+	 * @return true if the jwt specifies that the user is an admin, false otherwise
 	 */
-	 // TODO: should this return a new JWT rather than a boolean?
+	// TODO: should this return a new JWT rather than a boolean?
 	public boolean validateJwt(String jwt)
 	{
-		logger.debug("Login service checking the validity of the JWT")
+		logger.debug("Login service checking the validity of the JWT");
 		return jwtService.validateAdmin(jwt);
 	}
 
 	/**
 	 * Validate if the users details are correct.
 	 *
-	 * @param user the user retrieved from the database
+	 * @param user      the user retrieved from the database
 	 * @param plaintext the plaintext password to be compared
 	 * @return a boolean to denote if the login details are correct
 	 */
 	private boolean userValid(UserEntity user, String plaintext)
 	{
 		logger.debug("Login service validating user");
-		if(!hashingService.checkPassword(plaintext, user.getPassword())){
+		if (!hashingService.checkPassword(plaintext, user.getPassword())) {
 			logger.error("The password passed in did not match!");
 			throw new PasswordMismatchException();
 		}
-		logger.dubug("The password matches and the user is valid");
+		logger.debug("The password matches and the user is valid");
 		return true;
 	}
 
@@ -110,7 +108,7 @@ public class LoginService
 	 * @param emailAddress the users email address
 	 * @return the user
 	 */
-	 // TODO: Remove this? Unessesary? It is only a proxy call to the user service.
+	// TODO: Remove this? Unessesary? It is only a proxy call to the user service.
 	private UserEntity getUser(String emailAddress)
 	{
 		logger.debug("Login service retrieving user with email address: " + emailAddress);

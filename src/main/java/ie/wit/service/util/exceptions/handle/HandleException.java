@@ -62,6 +62,7 @@ public class HandleException
 		logger.debug("Warning, InvalidClaimException thrown. ");
 		return handleUnauthorized(req, e);
 	}
+
 	/**
 	 * Handle MissingClaimException.
 	 *
@@ -70,7 +71,8 @@ public class HandleException
 	 * @return a response entity containing the exception
 	 */
 	@ExceptionHandler(MissingClaimException.class)
-	public ResponseEntity<ClientErrorInformation> handleMissingClaim(HttpServletRequest req, Exception e){
+	public ResponseEntity<ClientErrorInformation> handleMissingClaim(HttpServletRequest req, Exception e)
+	{
 		logger.debug("Warning, MissingClaimException thrown. ");
 		return handleUnauthorized(req, e);
 	}

@@ -18,14 +18,24 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class TestJwtService
 {
+	/**
+	 * Autowired reference to the {@link JwtService}
+	 */
 	@Autowired
 	private JwtService jwtService;
 
+	/**
+	 * Test requesting a JWT
+	 */
 	@Test
 	public void testRequestJwt(){
 		String jwt = jwtService.requestJwt("joewemyss3@gmail.com", "Admin");
 		assertNotNull("Jwt is null", jwt);
 	}
+
+	/**
+	 * Test creating and validating a JWT
+	 */
 	@Test
 	public void testValidateJwt(){
 		String jwt = jwtService.requestJwt("joewemyss3@gmail.com", "ADMIN");

@@ -1,14 +1,12 @@
 package ie.wit.service.access;
 
-import ie.wit.service.util.exceptions.custom_exceptions.UserNotFoundException;
 import ie.wit.model.entity.UserEntity;
 import ie.wit.repository.UserRepo;
+import ie.wit.service.util.exceptions.custom_exceptions.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -43,7 +41,7 @@ class UserService
 	 * @param userRepo the user repository
 	 */
 	@Autowired
-	 UserService(UserRepo userRepo, HashingService hashingService)
+	UserService(UserRepo userRepo, HashingService hashingService)
 	{
 		this.userRepo = userRepo;
 		this.hashingService = hashingService;
@@ -54,9 +52,9 @@ class UserService
 	 *
 	 * @return the list of users
 	 */
-	 List<UserEntity> getUsers()
+	List<UserEntity> getUsers()
 	{
-		logger.info("UserService#getUsers called. " + userRepo.findAll().size() + " records found." );
+		logger.info("UserService#getUsers called. " + userRepo.findAll().size() + " records found.");
 		return userRepo.findAll();
 	}
 
@@ -67,7 +65,7 @@ class UserService
 	 * @return the requested user
 	 * @throws UserNotFoundException exception if the user is not found
 	 */
-	 UserEntity getOneUserByEmail(String emailAddress)
+	UserEntity getOneUserByEmail(String emailAddress)
 	{
 		UserEntity user = userRepo.findByEmailAddress(emailAddress);
 		if (user == null) {
@@ -84,7 +82,8 @@ class UserService
 	 * @param user the user to be added
 	 * @return a copy of the user that was added to the database
 	 */
-	UserEntity addUser(UserEntity user){
+	UserEntity addUser(UserEntity user)
+	{
 		logger.debug("request recieved to add user");
 		user.setPassword(hashingService.generatePasswordHash(user.getPassword()));
 		return userRepo.saveAndFlush(user);
@@ -97,9 +96,10 @@ class UserService
 	 *
 	 * @param emailAddress the email address of the user to be deleted
 	 */
-	 //TODO: Test if this still works without the transactional annotation
+	//TODO: Test if this still works without the transactional annotation
 	//@Transactional
-	 void deleteUser(String emailAddress){
+	void deleteUser(String emailAddress)
+	{
 		logger.debug("Request received by delete user service");
 		UserEntity user = getOneUserByEmail(emailAddress);
 		userRepo.delete(user);
