@@ -69,6 +69,7 @@ public class LoginService
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		UserEntity user = getUser(loginDetails.getEmailAddress());
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
+		// FIXME: edit JWT service to accept a collection of roles instead of just one
 		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()): "Not Authorized";
 	}
 	
