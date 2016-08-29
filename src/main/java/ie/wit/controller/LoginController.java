@@ -1,6 +1,8 @@
 package ie.wit.controller;
 
 import ie.wit.model.dto.in.LoginDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import javax.validation.Valid;
 @RequestMapping("/login")
 public class LoginController
 {
+	Logger logger = LoggerFactory.getLogger(LoginController.class);
+
 	/**
 	 * The endpoint that will be used to login
 	 *
@@ -28,7 +32,8 @@ public class LoginController
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestHeader HttpHeaders headers, @RequestBody @Valid LoginDto loginDetails)
 	{
+		logger.info("Post to login controller received");
 		// FIXME: 25/08/2016 Implement logic for login
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<String>("Hello client", HttpStatus.OK);
 	}
 }

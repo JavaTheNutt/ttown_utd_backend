@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -26,12 +25,15 @@ public class TestUserService
 	private UserService userService;
 
 	@Test
-	public void testGetAll(){
+	public void testGetAll()
+	{
 		List<UserEntity> users = userService.getUsers();
 		assertTrue("No Users", users.size() > 0);
 	}
+
 	@Test
-	public void testGetOne(){
+	public void testGetOne()
+	{
 		UserEntity user = userService.getOneUserByEmail("joewemyss3@gmail.com");
 		assertNotNull("Object is null", user);
 	}

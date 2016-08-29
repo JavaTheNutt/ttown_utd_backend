@@ -1,10 +1,8 @@
 package ie.wit.service.access;
 
 import ie.wit.model.dto.in.LoginDto;
-import ie.wit.model.entity.Role;
 import ie.wit.model.entity.UserEntity;
 import ie.wit.repository.RoleRepo;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,14 @@ import static org.junit.Assert.assertTrue;
 public class TestLoginService
 {
 	/**
+	 * The email address to be used for testing
+	 */
+	private static final String EMAIL_ADDRESS = "joe.wemyss@gmail.com";
+	/**
+	 * The password to be used for testing
+	 */
+	private static final String PLAIN_PASSWORD = "IAmJoe";
+	/**
 	 * The instance of {@link LoginService}
 	 */
 	@Autowired
@@ -31,19 +37,8 @@ public class TestLoginService
 	 */
 	@Autowired
 	private RoleRepo roleRepo;
-
 	@Autowired
-	private  UserService userService;
-
-	/**
-	 * The email address to be used for testing
-	 */
-	private static final String EMAIL_ADDRESS = "joe.wemyss@gmail.com";
-
-	/**
-	 * The password to be used for testing
-	 */
-	private static final String PLAIN_PASSWORD = "IAmJoe";
+	private UserService userService;
 
 	/**
 	 * This method will test the process of logging in
@@ -51,7 +46,7 @@ public class TestLoginService
 	@Test
 	public void testLogin()
 	{
-		try{
+		try {
 			//create a user
 			UserEntity user = new UserEntity(EMAIL_ADDRESS, PLAIN_PASSWORD);
 			//create a set of login details based on the user

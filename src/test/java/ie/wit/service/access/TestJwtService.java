@@ -28,7 +28,8 @@ public class TestJwtService
 	 * Test requesting a JWT
 	 */
 	@Test
-	public void testRequestJwt(){
+	public void testRequestJwt()
+	{
 		String jwt = jwtService.requestJwt("joewemyss3@gmail.com", "Admin");
 		assertNotNull("Jwt is null", jwt);
 	}
@@ -37,7 +38,8 @@ public class TestJwtService
 	 * Test creating and validating a JWT
 	 */
 	@Test
-	public void testValidateJwt(){
+	public void testValidateJwt()
+	{
 		String jwt = jwtService.requestJwt("joewemyss3@gmail.com", "ADMIN");
 		assertTrue("JWT not valid", jwtService.validateAdmin(jwt));
 	}

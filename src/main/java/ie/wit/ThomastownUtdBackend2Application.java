@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class ThomastownUtdBackend2Application
 {
-
 	public static void main(String[] args)
 	{
 		SpringApplication.run(ThomastownUtdBackend2Application.class, args);
