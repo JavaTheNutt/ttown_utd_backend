@@ -18,6 +18,7 @@ public class LoginDto
 	 */
 	@NotNull
 	@NotEmpty
+	@Email
 	private String emailAddress;
 
 	/**
