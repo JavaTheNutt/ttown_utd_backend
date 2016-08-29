@@ -79,8 +79,10 @@ public class LoginService
 	 * @param jwt  the jwt to be validated
 	 * @return  true if the jwt specifies that the user is an admin, false otherwise
 	 */
+	 // TODO: should this return a new JWT rather than a boolean?
 	public boolean validateJwt(String jwt)
 	{
+		logger.debug("Login service checking the validity of the JWT")
 		return jwtService.validateAdmin(jwt);
 	}
 
@@ -93,9 +95,12 @@ public class LoginService
 	 */
 	private boolean userValid(UserEntity user, String plaintext)
 	{
+		logger.debug("Login service validating user");
 		if(!hashingService.checkPassword(plaintext, user.getPassword())){
+			logger.error("The password passed in did not match!");
 			throw new PasswordMismatchException();
 		}
+		logger.dubug("The password matches and the user is valid");
 		return true;
 	}
 
@@ -105,8 +110,10 @@ public class LoginService
 	 * @param emailAddress the users email address
 	 * @return the user
 	 */
+	 // TODO: Remove this? Unessesary? It is only a proxy call to the user service.
 	private UserEntity getUser(String emailAddress)
 	{
+		logger.debug("Login service retrieving user with email address: " + emailAddress);
 		return userService.getOneUserByEmail(emailAddress);
 	}
 }
