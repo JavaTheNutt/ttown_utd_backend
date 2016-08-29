@@ -71,7 +71,7 @@ class UserService
 	{
 		UserEntity user = userRepo.findByEmailAddress(emailAddress);
 		if (user == null) {
-			logger.error("UserService#getOneByEmail() with email" + emailAddress + " not found!!");
+			logger.error("UserService#getOneByEmail() with email " + emailAddress + " not found!!");
 			throw new UserNotFoundException();
 		}
 		logger.info("User with the email address " + emailAddress + " found successfully");
@@ -92,10 +92,13 @@ class UserService
 
 	/**
 	 * This method will delete the user with the specified email address.
+	 * It first retrieves a user based on their email address and then deletes it.
+	 * It is done this way to avoid the transaction issues that are inherent in custom queries in Spring Data JPA
 	 *
 	 * @param emailAddress the email address of the user to be deleted
 	 */
-	@Transactional
+	 //TODO: Test if this still works without the transactional annotation
+	//@Transactional
 	 void deleteUser(String emailAddress){
 		logger.debug("Request received by delete user service");
 		UserEntity user = getOneUserByEmail(emailAddress);
