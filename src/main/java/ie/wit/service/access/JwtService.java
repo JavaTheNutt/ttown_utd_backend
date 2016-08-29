@@ -72,12 +72,14 @@ class JwtService
 	}
 
 	// FIXME: 28/08/2016 REFACTOR THIS!!!! TOO REPETETIVE.
+	// TODO: Possible Fix for repetition -- have the package-local methods check for validity and then create a Map of the claims to be verified. The exposed methods could then directly check for the claims that they need using the checkClaims() method.
 	/**
 	 * Validate if the user is an admin
 	 *
 	 * @param jwt The JWT in string format
 	 * @return true if user has admin role, false otherwise
 	 */
+	 // TODO: Refactor this to check JWT validity and then check for admin claim? Could then remove the method below.
 	boolean validateAdmin(String jwt){
 		Claims claims = parseJwt(jwt);
 		return validateAdminClaim(claims);
@@ -108,8 +110,8 @@ class JwtService
 		return claims.get("auth").equals("ADMIN");
 	}
 	
-	//TODO: TEST THIS!!!
-	//TODO: May need to refactor the hash map as not all values will be strings. May need to be T ? Object
+	//TODO: Test checkClaims()
+	//TODO: May need to refactor the hash map as not all values will be strings. May need to accept Object's
 	/**
 	 * This method wil check the validity of the claims contained in the JWT. 
 	 * 
@@ -135,24 +137,42 @@ class JwtService
 	 * @param claims the JWT to be validated
 	 * @return true if jwt is valid, false otherwise
 	 */
-	private boolean validateJwt(Claims claims){
+	private boolean validateJwt(Claims claims)
+	{
 		long nowMillis = System.currentTimeMillis();
 		logger.debug("Checking jwt validity");
 		Map<String, String> claimsToBeChecked = new HashMap<>();
 		claimsToBeChecked.put("iss", "JavaTheNutt");
 		/*
 		Uncomment this to test the new implementation above
-		return checkClaims(claims, claimsToBeChecked) && claims.getExpiration().after(new Date(nowMillis));
+		return checkClaims(claims, claimsToBeChecked) && checkExpiredJwt(claims);
 		*/
 		return claims.getIssuer().equals("JavaTheNutt") && claims.getExpiration().after(new Date(nowMillis));
 	}
 
+	//TODO: Test checkExpiredJwt()
+	/**
+	 * Check if a JWT is expired or sent before it is allowed.
+	 * 
+	 * @param expiryDate  the date that the JWT expires
+	 * @return  true if the JWT is expired, false if it is still valid
+	 */
+	private boolean checkJwtTime(Claims claims)
+	{
+		Date now = new Date(System.currentTimeMillis());
+		boolean notBefore = claims.getNotBefore().before(now);
+		boolean notExpired = claims.getExpiration().after(now);
+		
+		return notBefore && notExpired;
+	}
+	
 	/**
 	 * Gather the claims from the JWT
 	 * @param jwt the jwt that the claims should be gathered from
 	 * @return the claims in key => value pairs
 	 */
-	private Claims parseJwt(String jwt){
+	private Claims parseJwt(String jwt)
+	{
 		logger.debug("Parsing JWT");
 		return Jwts.parser()
 				.setSigningKey(DatatypeConverter.parseBase64Binary(secret)).parseClaimsJws(jwt).getBody();
