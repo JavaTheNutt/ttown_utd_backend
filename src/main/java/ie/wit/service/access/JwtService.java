@@ -61,9 +61,10 @@ class JwtService
 		Date now = new Date(nowMillis);
 		String jwt = Jwts.builder()
 				.setSubject(username)
-				.claim("Authentication", userRole)
+				.claim("auth", userRole)
 				.setIssuer("JavaTheNutt")
 				.setIssuedAt(now)
+				.setNotBefore(now)
 				.setExpiration(new Date(expMillis))
 				.signWith(signatureAlgorithm, secretKeyBytes)
 				.compact();
@@ -78,7 +79,8 @@ class JwtService
 	 * @return true if user has admin role, false otherwise
 	 */
 	boolean validateAdmin(String jwt){
-		return validateAdminClaim(jwt);
+		Claims claims = parseJwt(jwt);
+		return validateAdminClaim(claims);
 	}
 
 	/**
@@ -87,9 +89,9 @@ class JwtService
 	 * @param jwt the JWT string to be parsed
 	 * @return true if user has admin role, false otherwise
 	 */
-	private boolean validateAdminClaim(String jwt){
+	private boolean validateAdminClaim(Claims claims){
 		logger.debug("Checking claims");
-		Claims claims = parseJwt(jwt);
+		// TODO: Remove unnessecary memory allocation here after testing
 		boolean jwtValid = validateJwt(claims);
 		boolean isAdmin = isAdmin(claims);
 		return jwtValid && isAdmin;
@@ -103,9 +105,30 @@ class JwtService
 	 */
 	private boolean isAdmin(Claims claims){
 		logger.debug("Checking for admin authentication");
-		return claims.get("Authentication").equals("ADMIN");
+		return claims.get("auth").equals("ADMIN");
 	}
-
+	
+	//TODO: TEST THIS!!!
+	//TODO: May need to refactor the hash map as not all values will be strings. May need to be T ? Object
+	/**
+	 * This method wil check the validity of the claims contained in the JWT. 
+	 * 
+	 * @param claims  This will be the claims to be checked.
+	 * @param expected  This will be a Map of the expected values that will correspond with the claims
+	 * @return  true if all of the claims match, false otherwise
+	 */
+	private boolean checkClaims(Claims claims, Map<String, String> expected){
+		logger.debug("Checking " + expected.size() + " claims");
+		for(Map.Entry<String, String> entry : expected.entrySet()){
+			if(claims.get(entry.getKey()) != entry.getValue()){
+				logger.error("Warning! Invalid entry found for: " + entry.getKey() + " with value: " + entry.getValue());
+				return false;
+			}
+		}
+		logger.debug("All claims are valid");
+		return true;
+	}
+	
 	/**
 	 * This method will check if a JWT is valid.
 	 * 
@@ -115,6 +138,12 @@ class JwtService
 	private boolean validateJwt(Claims claims){
 		long nowMillis = System.currentTimeMillis();
 		logger.debug("Checking jwt validity");
+		Map<String, String> claimsToBeChecked = new HashMap<>();
+		claimsToBeChecked.put("iss", "JavaTheNutt");
+		/*
+		Uncomment this to test the new implementation above
+		return checkClaims(claims, claimsToBeChecked) && claims.getExpiration().after(new Date(nowMillis));
+		*/
 		return claims.getIssuer().equals("JavaTheNutt") && claims.getExpiration().after(new Date(nowMillis));
 	}
 
