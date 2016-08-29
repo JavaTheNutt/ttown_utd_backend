@@ -71,10 +71,17 @@ public class LoginService
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
 		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()): "Not Authorized";
 	}
-	public boolean validateJwt(String jwt){
+	
+	/**
+	 * This method will take a JWT in String form and will validate whether the user that sent it is an admin.
+	 * 
+	 * @param jwt  the jwt to be validated
+	 * @return  true if the jwt specifies that the user is an admin, false otherwise
+	 */
+	public boolean validateJwt(String jwt)
+	{
 		return jwtService.validateAdmin(jwt);
 	}
-
 
 	/**
 	 * Validate if the users details are correct.
