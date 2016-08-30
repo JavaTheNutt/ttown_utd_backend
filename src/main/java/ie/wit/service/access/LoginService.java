@@ -63,12 +63,19 @@ public class LoginService
 	 */
 	public String login(LoginDto loginDetails)
 	{
-		// TODO: 28/08/2016 TEST!!!!!!!!!! 
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		UserEntity user = getUser(loginDetails.getEmailAddress());
+		
+		//todo: test the below to see if the other method is superflous.
+		//UserEntity user = userService.getOneByEmailAddress(loginDetails.getEmailAddress());
+		
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
 		// FIXME: edit JWT service to accept a collection of roles instead of just one
+		// FIXME: this needs to return a reference to the user as well as the JWT. Perhaps a new Data Structure, or a Map?
+		
 		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()) : "Not Authorized";
+		//TODO: remove above line and uncomment below line when user entity is refactored.
+		//return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRole()) : "Not Authorized";
 	}
 
 	/**
@@ -77,7 +84,7 @@ public class LoginService
 	 * @param jwt the jwt to be validated
 	 * @return true if the jwt specifies that the user is an admin, false otherwise
 	 */
-	// TODO: should this return a new JWT rather than a boolean?
+	// TODO: should this return a new JWT rather than a boolean? Perhaps another method should generate the JWT when this one returns true.
 	public boolean validateJwt(String jwt)
 	{
 		logger.debug("Login service checking the validity of the JWT");
