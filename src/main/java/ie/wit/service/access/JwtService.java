@@ -88,6 +88,13 @@ class JwtService
 	boolean validateAdmin(String jwt)
 	{
 		Claims claims = parseJwt(jwt);
+		//Below is a possible implementation to cut the number of method calls in the chain. May not be as robust though.
+		//Perhaps it should stick with its current implementation but cut out the validateAdminClaim() method?
+		/**Map<String, String> claimsToBeChecked = new HashMap<>();
+		claimsToBeChecked.put("iss", "JavaTheNutt");
+		claimsToBeChecked.put("auth", "ADMIN");
+		boolean notExpired = checkJwtTime(claims);
+		return notExpired && checkClaims(claims, claimsToBeChecked)*/
 		return validateAdminClaim(claims);
 	}
 
