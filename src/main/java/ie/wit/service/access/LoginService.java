@@ -55,6 +55,8 @@ public class LoginService
 		this.jwtService = jwtService;
 	}
 
+
+	//TODO: This should return a UserOutDto as well as a String for the client session. Perhaps in Map<String, UserOutDto> where the String is the JWT??
 	/**
 	 * Take login details and verify.
 	 *
