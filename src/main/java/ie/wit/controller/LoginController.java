@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/login")
 public class LoginController
 {
-	Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	/**
 	 * The endpoint that will be used to login
