@@ -22,6 +22,8 @@ public class LoginController
 {
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+	//TODO: refactor this to return the details of the user that is logged in.
+	//TODO: create a service for building response entities??
 	/**
 	 * The endpoint that will be used to login
 	 *
@@ -34,6 +36,9 @@ public class LoginController
 	{
 		logger.info("Post to login controller received");
 		// FIXME: 25/08/2016 Implement logic for login
+		//1. post user details to login service
+		//2. receive the details of the user that logged in as well as a JWT for future authentication
+		//3. return a ResponseEntity containing the user details in the body, and the jwt in the header(where should this come from??)
 		return new ResponseEntity<String>("Hello client", HttpStatus.OK);
 	}
 }

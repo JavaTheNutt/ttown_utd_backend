@@ -57,13 +57,24 @@ public class UserEntity
 	 *
 	 * @see ie.wit.model.entity.Role Role
 	 */
+	 //TODO: Refactor the database so that it is a one to one relationship. Roles can be applied in tiers, where the tier above has all of the permissions of the tier below.
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "User_roles",
 			joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id")
 	)
+	//Once the Role database table has been modified, this can represent the primary key of the role, rather than the list of applicable roles
 	private List<Role> roles;
+	
+	/**
+	 * This will represent the foreign key relation between user and role.
+	 */
+	/*
+	@Basic(optional = false)
+	@Column(name = "role", updateable = false, insertable = false)
+	private Long role;
+	*/
 
 	/**
 	 * Default constructor.
@@ -230,4 +241,26 @@ public class UserEntity
 		}
 		return false;
 	}
+	
+	/**
+	 * Accessor for role.
+	 * 
+	 * @return the role of the user
+	 */
+	 /*
+	public Long getRole(){
+		return this.role;
+	}
+	*/
+	
+	/**
+	 * Mutator for role.
+	 * 
+	 * @param role  the role of the user
+	 */
+	 /*
+	public void setRole(Long role){
+		this.role = role;
+	}
+	*/
 }

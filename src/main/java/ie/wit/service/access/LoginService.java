@@ -55,6 +55,8 @@ public class LoginService
 		this.jwtService = jwtService;
 	}
 
+
+	//TODO: This should return a UserOutDto as well as a String for the client session. Perhaps in Map<String, UserOutDto> where the String is the JWT??
 	/**
 	 * Take login details and verify.
 	 *
@@ -63,21 +65,42 @@ public class LoginService
 	 */
 	public String login(LoginDto loginDetails)
 	{
-		// TODO: 28/08/2016 TEST!!!!!!!!!! 
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		UserEntity user = getUser(loginDetails.getEmailAddress());
+		
+		//todo: test the below to see if the other method is superflous.
+		//UserEntity user = userService.getOneByEmailAddress(loginDetails.getEmailAddress());
+		
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
 		// FIXME: edit JWT service to accept a collection of roles instead of just one
+		// FIXME: this needs to return a reference to the user as well as the JWT. Perhaps a new Data Structure, or a Map?
+		
 		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()) : "Not Authorized";
+		//TODO: remove above line and uncomment below line when user entity is refactored.
+		//return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRole()) : "Not Authorized";
 	}
 
+	/**
+	 * Validate a passed JWT and return a new one.
+	 * 
+	 * @param details a map containing the original jwt, the users email address and the users role
+	 * @return a jwt if the original was valid, "Not Authorized" otherwise.
+	 */
+	/*public String validateAndRegenerateJwt(Map<String, String> details){
+		if(validateJwt(details.get("jwt"))){
+			return jwtService.requestJwt(details.get("emailAddress"), details.get("role"));
+		}
+		return "Not Authorized";
+	}*/
 	/**
 	 * This method will take a JWT in String form and will validate whether the user that sent it is an admin.
 	 *
 	 * @param jwt the jwt to be validated
 	 * @return true if the jwt specifies that the user is an admin, false otherwise
 	 */
-	// TODO: should this return a new JWT rather than a boolean?
+	// TODO: should this return a new JWT rather than a boolean? Perhaps another method should generate the JWT when this one returns true.
+	//TODO: make this method private, and have another public method which requires a user name and role. so that when the user posts a JWT, they get a new one in return
+	//TODO: or refactor the jwt service so that it returns the data from when it validates the original jwt
 	public boolean validateJwt(String jwt)
 	{
 		logger.debug("Login service checking the validity of the JWT");
