@@ -7,18 +7,26 @@ package ie.wit.model.dto.out;
  */
 public class UserOutDto 
 {
+  //TODO: uncomment when db and userentity are refactored.
   /**
    * The users email address
    */
   private String emailAddress;
+  
   /**
    * The users first name if present, otherwise unknown
    */
   private String firstName;
+  
   /**
    * The users surname if present, otherwise unknown
    */
   private String surname;
+  
+  /**
+   * The Role of the user
+   */
+  //private String Role;
   
   /**
    * Constructor.
@@ -30,6 +38,7 @@ public class UserOutDto
   	this.emailAddress = user.getEmailAddress();
   	this.firstName = user.getFirstName().orElse("Unknown"); //if does not exist, set value to unknown
   	this.surname = user.getSurname().orElse("Unknown");//if does not exist, set value to unknown
+  	//this.role = user.getRole();
   }
   
   /**
@@ -58,4 +67,13 @@ public class UserOutDto
   public String getSurname(){
   	return this.surname;
   }
+  
+  /**
+   * Accessor for role.
+   * 
+   * @return the users role.
+   */
+   /*public String getRole(){
+     return this.role
+   }*/
 }
