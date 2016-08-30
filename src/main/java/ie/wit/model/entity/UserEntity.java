@@ -57,6 +57,7 @@ public class UserEntity
 	 *
 	 * @see ie.wit.model.entity.Role Role
 	 */
+	 //TODO: Refactor the database so that it is a one to one relationship. Roles can be applied in tiers, where the tier above has all of the permissions of the tier below.
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "User_roles",
