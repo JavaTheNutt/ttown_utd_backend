@@ -85,6 +85,8 @@ public class LoginService
 	 * @return true if the jwt specifies that the user is an admin, false otherwise
 	 */
 	// TODO: should this return a new JWT rather than a boolean? Perhaps another method should generate the JWT when this one returns true.
+	//TODO: make this method private, and have another public method which requires a user name and role. so that when the user posts a JWT, they get a new one in return
+	//TODO: or refactor the jwt service so that it returns the data from when it validates the original jwt
 	public boolean validateJwt(String jwt)
 	{
 		logger.debug("Login service checking the validity of the JWT");
