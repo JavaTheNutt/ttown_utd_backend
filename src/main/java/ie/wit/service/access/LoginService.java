@@ -81,6 +81,18 @@ public class LoginService
 	}
 
 	/**
+	 * Validate a passed JWT and return a new one.
+	 * 
+	 * @param details a map containing the original jwt, the users email address and the users role
+	 * @return a jwt if the original was valid, "Not Authorized" otherwise.
+	 */
+	/*public String validateAndRegenerateJwt(Map<String, String> details){
+		if(validateJwt(details.get("jwt"))){
+			return jwtService.requestJwt(details.get("emailAddress"), details.get("role"));
+		}
+		return "Not Authorized";
+	}*/
+	/**
 	 * This method will take a JWT in String form and will validate whether the user that sent it is an admin.
 	 *
 	 * @param jwt the jwt to be validated
