@@ -1,6 +1,7 @@
 package ie.wit.service.access;
 
 import ie.wit.model.dto.in.LoginDto;
+import ie.wit.model.dto.temp_transfer.UserJwtTransfer;
 import ie.wit.model.entity.UserEntity;
 
 import org.junit.Test;
@@ -43,8 +44,6 @@ public class TestLoginService
 	@Test
 	public void testLogin()
 	{
-
-		// FIXME: 30/08/2016 refactor role to be an enum
 		try {
 			//create a user
 			UserEntity user = new UserEntity(EMAIL_ADDRESS, PLAIN_PASSWORD, 1);
@@ -53,24 +52,18 @@ public class TestLoginService
 			//add the user to the database
 			userService.addUser(user);
 			//retrieve a JWT
-			String jwt = loginService.login(loginDto);
+			UserJwtTransfer userJwtTransfer = loginService.login(loginDto);
 			//assert that the JWT is not null
-			assertNotNull("The returned jwt is null", jwt);
+			assertNotNull("The returned jwt is null", userJwtTransfer);
 			//check that the JWT is valid
-			assertTrue("The JWT does not match", loginService.validateJwt(jwt));
+			assertTrue("The JWT does not match", loginService.validateJwt(userJwtTransfer.getJwt()));
+			assertEquals("The email address is incorrect", EMAIL_ADDRESS, userJwtTransfer.getUser().getEmailAddress());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			//delete the created user
 			userService.deleteUser(EMAIL_ADDRESS);
 		}
-	}
-
-	@Test
-	public void testGetUserRole(){
-		UserEntity user = new UserEntity(EMAIL_ADDRESS, PLAIN_PASSWORD, 1);
-		String roleName = loginService.getUsersRole(user);
-		assertEquals("Users role is incorrect", roleName, "ADMIN");
 	}
 
 }

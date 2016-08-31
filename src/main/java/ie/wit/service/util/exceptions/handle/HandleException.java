@@ -1,6 +1,7 @@
 package ie.wit.service.util.exceptions.handle;
 
 import ie.wit.service.util.exceptions.custom_exceptions.PasswordMismatchException;
+import ie.wit.service.util.exceptions.custom_exceptions.UserNotAuthorizedException;
 import ie.wit.service.util.exceptions.custom_exceptions.UserNotFoundException;
 import io.jsonwebtoken.InvalidClaimException;
 import io.jsonwebtoken.MissingClaimException;
@@ -32,6 +33,20 @@ public class HandleException
 	public ResponseEntity<ClientErrorInformation> handleUserNotFound(HttpServletRequest req, Exception e)
 	{
 		logger.debug("Warning, UserNotFoundException thrown. ");
+		return handleUnauthorized(req, e);
+	}
+
+	/**
+	 * Handle UserNotAuthorizedException.
+	 *
+	 * @param req the request that triggered the exception
+	 * @param e   the exception that was thrown
+	 * @return a response entity containing the exception
+	 */
+	@ExceptionHandler(UserNotAuthorizedException.class)
+	public ResponseEntity<ClientErrorInformation> handleUserNoAuthorized(HttpServletRequest req, Exception e)
+	{
+		logger.error("Warning, UserNotAuthorizedExceptionThrown");
 		return handleUnauthorized(req, e);
 	}
 

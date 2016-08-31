@@ -53,6 +53,7 @@ public class UserEntity
 
 	/**
 	 * This will represent the foreign key relation between user and role.
+	 * Each user will have exactly one role.
 	 */
 	@Basic(optional = false)
 	@Column(name = "role")

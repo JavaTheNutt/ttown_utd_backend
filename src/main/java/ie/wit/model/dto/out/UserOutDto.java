@@ -9,7 +9,6 @@ import ie.wit.model.entity.UserEntity;
  */
 public class UserOutDto
 {
-	//TODO: uncomment when db and userentity are refactored.
 	/**
 	 * The users email address
 	 */
@@ -28,7 +27,7 @@ public class UserOutDto
 	/**
 	 * The Role of the user
 	 */
-	//private String Role;
+	private Integer role;
 
 	/**
 	 * Constructor.
@@ -41,7 +40,7 @@ public class UserOutDto
 		this.emailAddress = user.getEmailAddress();
 		this.firstName = user.getFirstName().orElse("Unknown"); //if does not exist, set value to unknown
 		this.surname = user.getSurname().orElse("Unknown");//if does not exist, set value to unknown
-		//this.role = user.getRole();
+		this.role = user.getRole();
 	}
 
 	/**
@@ -79,7 +78,8 @@ public class UserOutDto
 	 *
 	 * @return the users role.
 	 */
-   /*public String getRole(){
-	 return this.role
-   }*/
+	public Integer getRole()
+	{
+		return this.role;
+	}
 }
