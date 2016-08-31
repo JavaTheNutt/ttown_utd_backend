@@ -1,5 +1,6 @@
 package ie.wit.service.access;
 
+import ie.wit.service.util.exceptions.custom_exceptions.UserNotAuthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -91,12 +92,11 @@ class JwtService
 		Claims claims = parseJwt(jwt);
 		//Below is a possible implementation to cut the number of method calls in the chain. May not be as robust though.
 		//Perhaps it should stick with its current implementation but cut out the validateAdminClaim() method?
-		/**Map<String, String> claimsToBeChecked = new HashMap<>();
+		Map<String, String> claimsToBeChecked = new HashMap<>();
 		 claimsToBeChecked.put("iss", "JavaTheNutt");
 		 claimsToBeChecked.put("auth", "ADMIN");
-		 boolean notExpired = checkJwtTime(claims);
-		 return notExpired && checkClaims(claims, claimsToBeChecked)*/
-		return validateAdminClaim(claims);
+		 return checkJwtTime(claims) && checkClaims(claims, claimsToBeChecked);
+		//return validateAdminClaim(claims);
 	}
 
 	/**
@@ -108,9 +108,6 @@ class JwtService
 	private boolean validateAdminClaim(Claims claims)
 	{
 		logger.debug("Checking claims");
-		// TODO: Remove unnessecary memory allocation here after testing
-		/*boolean jwtValid = validateJwt(claims);
-		boolean isAdmin = isAdmin(claims);*/
 		return validateJwt(claims) && isAdmin(claims);
 	}
 
@@ -123,7 +120,10 @@ class JwtService
 	private boolean isAdmin(Claims claims)
 	{
 		logger.debug("Checking for admin authentication");
-		return claims.get("auth").equals("ADMIN");
+		if(!claims.get("auth").equals("ADMIN")){
+			throw new UserNotAuthorizedException();
+		}
+		return true;
 	}
 
 	/**
@@ -140,7 +140,7 @@ class JwtService
 			if (!claims.get(entry.getKey()).equals(entry.getValue())) {
 				logger.error("Warning! Invalid entry found for: " + entry.getKey() + " with value: " + entry.getValue()
 						+ " Actual value for key: " + entry.getKey() + " was " + claims.get(entry.getKey()));
-				return false;
+				throw new UserNotAuthorizedException();
 			}
 		}
 		logger.debug("All claims are valid");
@@ -162,8 +162,6 @@ class JwtService
 
 		return checkClaims(claims, claimsToBeChecked) && checkJwtTime(claims);
 	}
-
-	//TODO: Test checkExpiredJwt()
 
 	/**
 	 * Check if a JWT is expired or sent before it is allowed.

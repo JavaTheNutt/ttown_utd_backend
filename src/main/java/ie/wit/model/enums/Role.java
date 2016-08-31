@@ -23,7 +23,7 @@ public enum Role
 	/**
 	 * Constructor to be called internally.
 	 *
-	 * @param The integer value of the Role
+	 * @param value integer value of the Role
 	 */
 	Role(int value)
 	{
