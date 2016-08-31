@@ -77,7 +77,7 @@ class JwtService
 
 	// FIXME: 28/08/2016 REFACTOR THIS!!!! TOO REPETETIVE.
 	// TODO: Possible Fix for repetition -- have the package-local methods check for validity and then create a Map of the claims to be verified. The exposed methods could then directly check for the claims that they need using the checkClaims() method.
-	
+
 	/**
 	 * Validate if the user is an admin
 	 *
@@ -92,10 +92,10 @@ class JwtService
 		//Below is a possible implementation to cut the number of method calls in the chain. May not be as robust though.
 		//Perhaps it should stick with its current implementation but cut out the validateAdminClaim() method?
 		/**Map<String, String> claimsToBeChecked = new HashMap<>();
-		claimsToBeChecked.put("iss", "JavaTheNutt");
-		claimsToBeChecked.put("auth", "ADMIN");
-		boolean notExpired = checkJwtTime(claims);
-		return notExpired && checkClaims(claims, claimsToBeChecked)*/
+		 claimsToBeChecked.put("iss", "JavaTheNutt");
+		 claimsToBeChecked.put("auth", "ADMIN");
+		 boolean notExpired = checkJwtTime(claims);
+		 return notExpired && checkClaims(claims, claimsToBeChecked)*/
 		return validateAdminClaim(claims);
 	}
 

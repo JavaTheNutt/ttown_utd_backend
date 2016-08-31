@@ -1,5 +1,6 @@
 package ie.wit.service.access;
 
+
 import ie.wit.model.entity.UserEntity;
 import ie.wit.repository.UserRepo;
 import ie.wit.service.util.exceptions.custom_exceptions.UserNotFoundException;
@@ -29,6 +30,7 @@ class UserService
 	 * The reference to the user repository
 	 */
 	private UserRepo userRepo;
+
 
 	/**
 	 * The reference to the hasing service
@@ -72,6 +74,7 @@ class UserService
 			logger.error("UserService#getOneByEmail() with email " + emailAddress + " not found!!");
 			throw new UserNotFoundException();
 		}
+		//FIXME: role is not being persisted
 		logger.info("User with the email address " + emailAddress + " found successfully");
 		return user;
 	}
@@ -82,6 +85,7 @@ class UserService
 	 * @param user the user to be added
 	 * @return a copy of the user that was added to the database
 	 */
+	@Transactional
 	UserEntity addUser(UserEntity user)
 	{
 		logger.debug("request recieved to add user");
@@ -96,13 +100,12 @@ class UserService
 	 *
 	 * @param emailAddress the email address of the user to be deleted
 	 */
-	//TODO: Test if this still works without the transactional annotation
-	//@Transactional
 	void deleteUser(String emailAddress)
 	{
 		logger.debug("Request received by delete user service");
 		UserEntity user = getOneUserByEmail(emailAddress);
 		userRepo.delete(user);
 	}
+
 
 }

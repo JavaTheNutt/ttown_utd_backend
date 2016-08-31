@@ -24,6 +24,7 @@ public class LoginController
 
 	//TODO: refactor this to return the details of the user that is logged in.
 	//TODO: create a service for building response entities??
+
 	/**
 	 * The endpoint that will be used to login
 	 *

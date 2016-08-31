@@ -44,6 +44,6 @@ class HashingService
 	String generatePasswordHash(String plaintext)
 	{
 		logger.info("Password service generating a password");
-		return BCrypt.hashpw(plaintext, BCrypt.gensalt(14));
+		return BCrypt.hashpw(plaintext, BCrypt.gensalt());
 	}
 }

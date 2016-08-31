@@ -1,8 +1,6 @@
 package ie.wit.model.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -52,29 +50,13 @@ public class UserEntity
 	@Column(name = "surname")
 	private String surname;
 
-	/**
-	 * List of user roles
-	 *
-	 * @see ie.wit.model.entity.Role Role
-	 */
-	 //TODO: Refactor the database so that it is a one to one relationship. Roles can be applied in tiers, where the tier above has all of the permissions of the tier below.
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "User_roles",
-			joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id")
-	)
-	//Once the Role database table has been modified, this can represent the primary key of the role, rather than the list of applicable roles
-	private List<Role> roles;
-	
+
 	/**
 	 * This will represent the foreign key relation between user and role.
 	 */
-	/*
 	@Basic(optional = false)
-	@Column(name = "role", updateable = false, insertable = false)
-	private Long role;
-	*/
+	@Column(name = "role")
+	private Integer role;
 
 	/**
 	 * Default constructor.
@@ -90,10 +72,11 @@ public class UserEntity
 	 * @param emailAddress the username
 	 * @param password     the hashed password
 	 */
-	public UserEntity(String emailAddress, String password)
+	public UserEntity(String emailAddress, String password, Integer role)
 	{
 		this.emailAddress = emailAddress;
 		this.password = password;
+		this.role = role;
 	}
 
 	/**
@@ -198,69 +181,22 @@ public class UserEntity
 	}
 
 	/**
-	 * Accessor for the roles.
-	 *
-	 * @return the list of @link{Role}s
-	 */
-	public List<Role> getRoles()
-	{
-		return roles;
-	}
-
-	/**
-	 * set the users roles.
-	 *
-	 * @param roles the list of @link{Role}s to be set
-	 */
-	public void setRoles(List<Role> roles)
-	{
-		this.roles = roles;
-	}
-
-	/**
-	 * Add a @link{Role} to the list.
-	 * If the list has not been instantiated, instantiate it.
-	 *
-	 * @param role the role to be added
-	 */
-	public void addRole(Role role)
-	{
-		if (roles == null) {
-			roles = new ArrayList<>();
-		}
-		roles.add(role);
-	}
-
-	//// TODO: 25/08/2016 refactor class to hold a list of role names rather than roles
-	public boolean hasRole(String role)
-	{
-		for (Role role1 : roles) {
-			if (role1.getName().equalsIgnoreCase(role)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
 	 * Accessor for role.
-	 * 
+	 *
 	 * @return the role of the user
 	 */
-	 /*
-	public Long getRole(){
+	public Integer getRole()
+	{
 		return this.role;
 	}
-	*/
-	
+
 	/**
 	 * Mutator for role.
-	 * 
-	 * @param role  the role of the user
+	 *
+	 * @param role the role of the user
 	 */
-	 /*
-	public void setRole(Long role){
+	public void setRole(Integer role)
+	{
 		this.role = role;
 	}
-	*/
 }

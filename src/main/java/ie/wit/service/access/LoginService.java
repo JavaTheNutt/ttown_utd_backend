@@ -2,6 +2,7 @@ package ie.wit.service.access;
 
 import ie.wit.model.dto.in.LoginDto;
 import ie.wit.model.entity.UserEntity;
+import ie.wit.model.enums.Role;
 import ie.wit.service.util.exceptions.custom_exceptions.PasswordMismatchException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,7 @@ public class LoginService
 
 
 	//TODO: This should return a UserOutDto as well as a String for the client session. Perhaps in Map<String, UserOutDto> where the String is the JWT??
+
 	/**
 	 * Take login details and verify.
 	 *
@@ -67,22 +69,27 @@ public class LoginService
 	{
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 		UserEntity user = getUser(loginDetails.getEmailAddress());
-		
+
 		//todo: test the below to see if the other method is superflous.
 		//UserEntity user = userService.getOneByEmailAddress(loginDetails.getEmailAddress());
-		
+
 		// FIXME: implement logic to validate loginDetails and make a call to a service to create a JWT
 		// FIXME: edit JWT service to accept a collection of roles instead of just one
 		// FIXME: this needs to return a reference to the user as well as the JWT. Perhaps a new Data Structure, or a Map?
-		
-		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()) : "Not Authorized";
+
+		String role = getUsersRole(user);
+		////return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRoles().get(0).getName()) : "Not Authorized";
 		//TODO: remove above line and uncomment below line when user entity is refactored.
-		//return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), user.getRole()) : "Not Authorized";
+		return userValid(user, loginDetails.getPassword()) ? jwtService.requestJwt(user.getEmailAddress(), role) : "Not Authorized";
 	}
 
+	String getUsersRole(UserEntity user)
+	{
+		return Role.getStringValueFromInt(user.getRole());
+	}
 	/**
 	 * Validate a passed JWT and return a new one.
-	 * 
+	 *
 	 * @param details a map containing the original jwt, the users email address and the users role
 	 * @return a jwt if the original was valid, "Not Authorized" otherwise.
 	 */
@@ -92,6 +99,7 @@ public class LoginService
 		}
 		return "Not Authorized";
 	}*/
+
 	/**
 	 * This method will take a JWT in String form and will validate whether the user that sent it is an admin.
 	 *
