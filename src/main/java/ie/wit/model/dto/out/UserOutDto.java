@@ -25,9 +25,9 @@ public class UserOutDto
 	private String surname;
 
 	/**
-	 * The Role of the user
+	 * The role name of the user
 	 */
-	private Integer role;
+	private String role;
 
 	/**
 	 * Constructor.
@@ -40,7 +40,7 @@ public class UserOutDto
 		this.emailAddress = user.getEmailAddress();
 		this.firstName = user.getFirstName().orElse("Unknown"); //if does not exist, set value to unknown
 		this.surname = user.getSurname().orElse("Unknown");//if does not exist, set value to unknown
-		this.role = user.getRole();
+		this.role = Role.getStringValueFromInt(user.getRole());
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class UserOutDto
 	 *
 	 * @return the users role.
 	 */
-	public Integer getRole()
+	public String getRole()
 	{
 		return this.role;
 	}
