@@ -1,6 +1,6 @@
 package ie.wit.model.dto.in;
 
-import ie.wit.model.entity.UserEntity;
+import ie.wit.model.dto.in.LoginDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
