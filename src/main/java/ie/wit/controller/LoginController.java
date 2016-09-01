@@ -47,6 +47,6 @@ public class LoginController
 		logger.info("Post to login controller received");
 		UserJwtTransfer userTransfer = loginService.login(loginDetails);
 		headers.add("auth", userTransfer.getJwt());
-		return new ResponseEntity<UserOutDto>(userTransfer.getUser(), headers, HttpStatus.OK);
+		return new ResponseEntity<>(userTransfer.getUser(), headers, HttpStatus.OK);
 	}
 }

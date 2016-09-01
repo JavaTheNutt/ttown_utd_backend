@@ -1,5 +1,7 @@
 package ie.wit.model.entity;
 
+import javax.persistence.*;
+
 /**
  * This class represents a doctor entity that JPA will persist to the database
  *
@@ -125,7 +127,7 @@ public class DoctorEntity
 	/**
 	 * Mutator for the primary key
 	 * 
-	 * @param the new id
+	 * @param id the new id
 	 */
 	public void setId(Long id){
 		this.id = id;
@@ -134,7 +136,7 @@ public class DoctorEntity
 	/**
 	 * Mutator for the first name
 	 * 
-	 * @param the new first name
+	 * @param firstName the new first name
 	 */
 	public void setFirstName(String firstName){
 		this.firstName = firstName;
@@ -143,7 +145,7 @@ public class DoctorEntity
 	/**
 	 * Mutator for the surname
 	 * 
-	 * @param the new surname
+	 * @param surname the new surname
 	 */
 	public void setSurname(String surname){
 		this.surname = surname;
@@ -152,7 +154,7 @@ public class DoctorEntity
 	/**
 	 * Mutator for the street address
 	 * 
-	 * @param the new street address
+	 * @param streetAddress the new street address
 	 */
 	public void setStreetAddress(String streetAddress){
 		this.streetAddress = streetAddress;
@@ -161,7 +163,7 @@ public class DoctorEntity
 	/**
 	 * Mutator for the town address 
 	 * 
-	 * @param the new town address
+	 * @param townAddress the new town address
 	 */
 	public void setTownAddress(String townAddress){
 		this.townAddress = townAddress;
@@ -170,7 +172,7 @@ public class DoctorEntity
 	/**
 	 * Mutator for the contact nnumber 
 	 * 
-	 * @param the new contact number
+	 * @param contactNumber the new contact number
 	 */
 	public void setContactNumber(String contactNumber){
 		this.contactNumber  = contactNumber;

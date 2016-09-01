@@ -40,7 +40,7 @@ public class TestUserOutDto
 		
 		assertEquals("User 1 role does not match", "ADMIN", userOut.getRole());
 		assertEquals("User 2 role does not match", "WRITE", userOut2.getRole());
-		assertEquals("User 3 role does not match", "READ", user3Out.getRole());
+		assertEquals("User 3 role does not match", "READ", userOut3.getRole());
 		
 		assertEquals("User 1 first name does not match", "Unknown", userOut.getFirstName());
 		assertEquals("User 2 first name does not match", "Joe", userOut2.getFirstName());

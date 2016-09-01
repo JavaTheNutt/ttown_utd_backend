@@ -1,6 +1,7 @@
 package ie.wit.model.dto.out;
 
 import ie.wit.model.entity.UserEntity;
+import ie.wit.model.enums.Role;
 
 /**
  * This class is the details of a user that will be sent back after a successful login.
