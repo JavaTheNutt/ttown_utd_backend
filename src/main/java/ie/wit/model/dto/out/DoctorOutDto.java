@@ -53,6 +53,13 @@ public class DoctorOutDto
 
 	/**
 	 * Full constructor
+	 *
+	 * @param id            the primary key of the entity
+	 * @param firstName     the doctors first name
+	 * @param surname       the doctors surname
+	 * @param streetAddress the doctors street address
+	 * @param townAddress   the doctors town address
+	 * @param contactNumber the doctors contact number
 	 */
 	public DoctorOutDto(Long id, String firstName, String surname, String streetAddress, String townAddress, String contactNumber)
 	{

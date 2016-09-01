@@ -93,9 +93,9 @@ class JwtService
 		//Below is a possible implementation to cut the number of method calls in the chain. May not be as robust though.
 		//Perhaps it should stick with its current implementation but cut out the validateAdminClaim() method?
 		Map<String, String> claimsToBeChecked = new HashMap<>();
-		 claimsToBeChecked.put("iss", "JavaTheNutt");
-		 claimsToBeChecked.put("auth", "ADMIN");
-		 return checkJwtTime(claims) && checkClaims(claims, claimsToBeChecked);
+		claimsToBeChecked.put("iss", "JavaTheNutt");
+		claimsToBeChecked.put("auth", "ADMIN");
+		return checkJwtTime(claims) && checkClaims(claims, claimsToBeChecked);
 		//return validateAdminClaim(claims);
 	}
 
@@ -120,7 +120,7 @@ class JwtService
 	private boolean isAdmin(Claims claims)
 	{
 		logger.debug("Checking for admin authentication");
-		if(!claims.get("auth").equals("ADMIN")){
+		if (!claims.get("auth").equals("ADMIN")) {
 			throw new UserNotAuthorizedException();
 		}
 		return true;
@@ -182,7 +182,7 @@ class JwtService
 	 * Gather the claims from the JWT
 	 *
 	 * @param jwt the jwt that the claims should be gathered from
-	 * @return the claims in key => value pairs
+	 * @return the claims in key, value pairs
 	 */
 	private Claims parseJwt(String jwt)
 	{

@@ -72,6 +72,7 @@ public class UserEntity
 	 *
 	 * @param emailAddress the username
 	 * @param password     the hashed password
+	 * @param role         the users role
 	 */
 	public UserEntity(String emailAddress, String password, Integer role)
 	{

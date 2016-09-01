@@ -8,7 +8,7 @@ package ie.wit.service.util.exceptions.custom_exceptions;
 public class UserNotFoundException extends RuntimeException
 {
 	/**
-	 * Default constructor with predefined message
+	 * Default constructor with predefined message.
 	 */
 	public UserNotFoundException()
 	{
@@ -16,7 +16,9 @@ public class UserNotFoundException extends RuntimeException
 	}
 
 	/**
-	 * Constructor with message specified by the caller
+	 * Constructor with message specified by the caller.
+	 *
+	 * @param message the message to be associated with the exception
 	 */
 	public UserNotFoundException(String message)
 	{
