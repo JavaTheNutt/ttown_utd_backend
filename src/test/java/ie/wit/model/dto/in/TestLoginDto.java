@@ -22,7 +22,7 @@ public class TestLoginDto
 	 * This method will test the creation of a login data transfer object.
 	 */
 	@Test
-	public void testCreateLoginDto
+	public void testCreateLoginDto()
 	{
 		LoginDto login = new LoginDto("joewemyss3@gmail.com", "IAmJoe");
 		assertEquals("Email does not match", "joewemyss3@gmail.com", login.getEmailAddress());
