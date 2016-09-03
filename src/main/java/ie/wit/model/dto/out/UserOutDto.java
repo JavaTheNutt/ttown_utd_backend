@@ -83,4 +83,15 @@ public class UserOutDto
 	{
 		return this.role;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "UserOutDto{" +
+				"emailAddress='" + emailAddress + '\'' +
+				", firstName='" + firstName + '\'' +
+				", surname='" + surname + '\'' +
+				", role='" + role + '\'' +
+				'}';
+	}
 }

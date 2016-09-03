@@ -29,7 +29,8 @@ public class TestLoginController{
 
 	@Test
 	public void testLogin(){
-		ResponseEntity<UserOutDto> res = loginController.login(new HttpHeaders(), new LoginDto("joewemyss3@gmail.com", "IAmJoe"));
+		LoginDto login =  new LoginDto("joewemyss3@gmail.com", "IAmJoe");
+		ResponseEntity<UserOutDto> res = loginController.login(new HttpHeaders(), login);
 		UserOutDto user = res.getBody();
 		String jwt = res.getHeaders().get("auth").get(0);
 		logger.debug(jwt);

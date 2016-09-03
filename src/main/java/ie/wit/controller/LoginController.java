@@ -47,6 +47,11 @@ public class LoginController
 		logger.info("Post to login controller received");
 		UserJwtTransfer userTransfer = loginService.login(loginDetails);
 		headers.add("auth", userTransfer.getJwt());
+		logger.info("The headers: " + headers);
+		// TODO: 03/09/2016 Refactor this to set the content lenght to the length of the value to be returned 
+		headers.set("content-length", "200");
+		logger.info("returning user: " + userTransfer.getUser().toString());
+		// TODO: 03/09/2016 create a service that can be used to create response objects that can be used 
 		return new ResponseEntity<>(userTransfer.getUser(), headers, HttpStatus.OK);
 	}
 }
