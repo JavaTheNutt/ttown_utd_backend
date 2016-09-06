@@ -46,7 +46,7 @@ public class ResponseService
 	 * @param jwt the JWT to be added to the headers
 	 * @param bodyLength the length of the body of the response.
 	 */
-	private HttpHeaders adjustHeaders(String jwt, int bodyLength){
+	public HttpHeaders adjustHeaders(String jwt, int bodyLength){
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.add("auth", jwt);
