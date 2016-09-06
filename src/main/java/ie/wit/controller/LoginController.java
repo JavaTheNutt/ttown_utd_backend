@@ -27,11 +27,13 @@ public class LoginController
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	private LoginService loginService;
+	private ResponseService responseService;
 
 	@Autowired
-	public LoginController(LoginService loginService)
+	public LoginController(LoginService loginService, ResponseService responseService)
 	{
 		this.loginService = loginService;
+		this.responseService = responseService;
 	}
 
 	/**
@@ -44,14 +46,32 @@ public class LoginController
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<UserOutDto> login(@RequestHeader HttpHeaders headers, @RequestBody @Valid LoginDto loginDetails)
 	{
+		//todo: remove the headers from the signiture and use the response service to generate the response
 		logger.info("Post to login controller received");
 		UserJwtTransfer userTransfer = loginService.login(loginDetails);
 		headers.add("auth", userTransfer.getJwt());
 		logger.info("The headers: " + headers);
-		// TODO: 03/09/2016 Refactor this to set the content lenght to the length of the value to be returned 
 		headers.set("content-length", "200");
 		logger.info("returning user: " + userTransfer.getUser().toString());
 		// TODO: 03/09/2016 create a service that can be used to create response objects that can be used 
 		return new ResponseEntity<>(userTransfer.getUser(), headers, HttpStatus.OK);
 	}
+	
+	/**
+	 * The endpoint that will be used to login
+	 *
+	 * @param headers      the http headers os that a JWT can be appended to them
+	 * @param loginDetails valid login details of a user
+	 * @return a response entity
+	 */
+	/*@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<UserOutDto> login(@RequestBody @Valid LoginDto loginDetails)
+	{
+		logger.info("Post to login controller received");
+		UserJwtTransfer userTransfer = loginService.login(loginDetails);
+		HttpHeaders headers = responseService.adjustHeaders(userTransfer.getJwt(), userTransfer.getUser().toString().length);
+		logger.info("returning user: " + userTransfer.getUser().toString());
+		// TODO: 03/09/2016 create a service that can be used to create response objects that can be used 
+		return new ResponseEntity<>(userTransfer.getUser(), headers, HttpStatus.OK);
+	}*/
 }
