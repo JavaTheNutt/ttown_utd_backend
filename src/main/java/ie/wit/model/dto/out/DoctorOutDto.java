@@ -8,7 +8,7 @@ import java.util.Optional;
  *
  * @author Joe Wemyss
  */
-public class DoctorOutDto
+public class DoctorOutDto implements IOut
 {
 	/**
 	 * Representation of the primary key.

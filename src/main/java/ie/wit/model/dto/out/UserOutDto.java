@@ -1,5 +1,6 @@
 package ie.wit.model.dto.out;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import ie.wit.model.entity.UserEntity;
 import ie.wit.model.enums.Role;
 
@@ -8,7 +9,7 @@ import ie.wit.model.enums.Role;
  *
  * @author Joe Wemyss
  */
-public class UserOutDto
+public class UserOutDto implements IOut
 {
 	/**
 	 * The users email address
