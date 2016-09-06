@@ -1,5 +1,5 @@
 /**
- * This package contains all of the service classes that act as an itermediary between the repositories and controllers
+ * This package contains all of the service classes that act as an intermediary between the repositories and controllers. The majority of the business logic for the application is contained here.
  *
  * @author Joe Wemyss
  */

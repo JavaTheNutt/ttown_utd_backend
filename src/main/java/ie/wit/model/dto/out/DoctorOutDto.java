@@ -192,5 +192,16 @@ public class DoctorOutDto implements IOut
 		this.contactNumber = contactNumber;
 	}
 
-	// TODO: Generate toString()
+	@Override
+	public String toString()
+	{
+		return "DoctorOutDto{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", surname='" + surname + '\'' +
+				", streetAddress='" + streetAddress + '\'' +
+				", townAddress='" + townAddress + '\'' +
+				", contactNumber='" + contactNumber + '\'' +
+				'}';
+	}
 }

@@ -1,5 +1,6 @@
 package ie.wit.service.util.exceptions.handle;
 
+import ie.wit.service.util.exceptions.custom_exceptions.InvalidJwtException;
 import ie.wit.service.util.exceptions.custom_exceptions.PasswordMismatchException;
 import ie.wit.service.util.exceptions.custom_exceptions.UserNotAuthorizedException;
 import ie.wit.service.util.exceptions.custom_exceptions.UserNotFoundException;
@@ -35,7 +36,7 @@ public class HandleException
 		logger.error("Warning, UserNotFoundException thrown. ");
 		return handleUnauthorized(req, e);
 	}
-	
+
 	/**
 	 * Handle InvalidJwtException.
 	 *
@@ -44,11 +45,12 @@ public class HandleException
 	 * @return a response entity containing the exception
 	 */
 	@ExceptionHandler(InvalidJwtException.class)
-	public ResponseEntity<ClientErrorInformation> handleInvalidJwtException(HttpServletRequest req, Exception e){
+	public ResponseEntity<ClientErrorInformation> handleInvalidJwtException(HttpServletRequest req, Exception e)
+	{
 		logger.error("Warning, InvalidJwtException thrown.");
 		return handleUnauthorized(req, e);
 	}
-	
+
 	/**
 	 * Handle UserNotAuthorizedException.
 	 *

@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 /**
  * This service will validate user logins and defer to another service to create the JWT for authentication
  *
@@ -84,7 +82,7 @@ public class LoginService
 
 	/**
 	 * This returns the name of the users role based on the integer value.
-	 * 
+	 *
 	 * @param user the user whos role name is required
 	 * @return the name of the users role
 	 */
@@ -93,56 +91,37 @@ public class LoginService
 		return Role.getStringValueFromInt(user.getRole());
 	}
 
-	//todo: delete this method if testing the other one is unsuccessful
-	/**
-	 * Validate a passed JWT and return a new one.
-	 *
-	 * @param details a map containing the original jwt, the users email address and the users role
-	 * @return a jwt if the original was valid, "Not Authorized" otherwise.
-	 */
-	public String validateAndRegenerateJwt(Map<String, String> details)
-	{
-		//todo: refactor this as the required details are already contained in the JWT. This should be able to request a new JWT using the information contained in the old one.
-		if (validateJwt(details.get("jwt"))) {
-			return jwtService.requestJwt(details.get("emailAddress"), details.get("role"));
-		}
-		return "Not Authorized";
-	}
-	
 	/**
 	 * Validate a passed jwt and return a new one
-	 * 
+	 *
 	 * @param jwt the old JWT
 	 * @return a new JWT
 	 */
-	public String validateAndRegenerateJwt(String jwt){
-		if(validateJwt(jwt){
-			Map<String, String> details = jwtService.getUsernameAndRole(jwt);
-			return jwtService.requestJwt(details.get("user"), details.get("role");
-		}
-		return "Not Authorized";
+	public String validateAndRegenerateJwt(String jwt)
+	{
+		return jwtService.requestNewJwt(jwt);
 	}
+
 	/**
 	 * This will return a user based on the jwt passed
-	 * 
+	 *
 	 * @param jwt the JWT sent in the header of the request
 	 * @return the user who was given the JWT
 	 */
-	public UserEntity getUserFromJwt(String jwt){
+	public UserEntity getUserFromJwt(String jwt)
+	{
 		//1. parse jwt.
 		//2. get the user contained in the jwt 
 		//3. return the user
+		return null;
 	}
-	
+
 	/**
 	 * This method will take a JWT in String form and will validate whether the user that sent it is an admin.
 	 *
 	 * @param jwt the jwt to be validated
 	 * @return true if the jwt specifies that the user is an admin, false otherwise
 	 */
-	// TODO: should this return a new JWT rather than a boolean? Perhaps another method should generate the JWT when this one returns true.
-	//TODO: make this method private, and have another public method which requires a user name and role. so that when the user posts a JWT, they get a new one in return
-	//TODO: or refactor the jwt service so that it returns the data from when it validates the original jwt
 	boolean validateJwt(String jwt)
 	{
 		logger.debug("Login service checking the validity of the JWT");

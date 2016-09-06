@@ -5,6 +5,9 @@ package ie.wit.service.util.exceptions.custom_exceptions;
  */
 public class UserNotAuthorizedException extends RuntimeException
 {
+	/**
+	 * {@inheritDoc}
+	 */
 	public UserNotAuthorizedException()
 	{
 		super("The user is not authorized");

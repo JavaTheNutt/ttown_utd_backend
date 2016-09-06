@@ -1,6 +1,5 @@
 package ie.wit.model.dto.out;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import ie.wit.model.entity.UserEntity;
 import ie.wit.model.enums.Role;
 

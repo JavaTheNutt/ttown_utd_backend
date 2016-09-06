@@ -3,16 +3,13 @@ package ie.wit.service.access;
 import ie.wit.model.dto.in.LoginDto;
 import ie.wit.model.dto.temp_transfer.UserJwtTransfer;
 import ie.wit.model.entity.UserEntity;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * This will test the login service

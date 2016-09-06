@@ -8,7 +8,7 @@ package ie.wit.service.util.exceptions.custom_exceptions;
 public class PasswordMismatchException extends RuntimeException
 {
 	/**
-	 * Default constructor with a predefined message.
+	 * {@inheritDoc}
 	 */
 	public PasswordMismatchException()
 	{

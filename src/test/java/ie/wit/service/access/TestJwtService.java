@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 /**
  * This class tests JWT generation.
@@ -18,6 +19,9 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class TestJwtService
 {
+	private static final String USERNAME = "joewemyss3@gmail.com";
+	private static final String ADMIN_ROLE = "Admin";
+
 	/**
 	 * Autowired reference to the {@link JwtService}
 	 */
@@ -42,5 +46,24 @@ public class TestJwtService
 	{
 		String jwt = jwtService.requestJwt("joewemyss3@gmail.com", "ADMIN");
 		assertTrue("JWT not valid", jwtService.validateAdmin(jwt));
+	}
+
+	@Test
+	public void testGetUsernameAndRole()
+	{
+		String jwt = jwtService.requestJwt(USERNAME, ADMIN_ROLE);
+		Map<String, String> details = jwtService.getUsernameAndRole(jwt);
+		assertEquals("The username is incorrect", USERNAME, details.get("user"));
+		assertEquals("The Role is incorrect", ADMIN_ROLE, details.get("role"));
+	}
+
+	@Test
+	public void testGetNewJwt()
+	{
+		String jwt = jwtService.requestJwt(USERNAME, ADMIN_ROLE);
+		String newJwt = jwtService.requestNewJwt(jwt);
+		Map<String, String> details = jwtService.getUsernameAndRole(newJwt);
+		assertEquals("The username is incorrect", USERNAME, details.get("user"));
+		assertEquals("The Role is incorrect", ADMIN_ROLE, details.get("role"));
 	}
 }

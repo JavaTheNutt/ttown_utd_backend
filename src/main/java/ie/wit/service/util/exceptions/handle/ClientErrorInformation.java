@@ -88,9 +88,7 @@ public class ClientErrorInformation
 	}
 
 	/**
-	 * Simple toString() method.
-	 *
-	 * @return The class in string format
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString()

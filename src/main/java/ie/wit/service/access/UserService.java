@@ -74,7 +74,7 @@ class UserService
 			logger.error("UserService#getOneByEmail() with email " + emailAddress + " not found!!");
 			throw new UserNotFoundException();
 		}
-		//FIXME: role is not being persisted
+
 		logger.info("User with the email address " + emailAddress + " found successfully");
 		return user;
 	}

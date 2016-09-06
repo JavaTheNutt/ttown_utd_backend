@@ -1,19 +1,17 @@
 package ie.wit.model.dto.in;
 
-import ie.wit.model.dto.in.LoginDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
-* This class tests the login data transfer object.
-*
-* @author Joe Wemyss
-*/
+ * This class tests the login data transfer object.
+ *
+ * @author Joe Wemyss
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestLoginDto

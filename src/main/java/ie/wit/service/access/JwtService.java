@@ -1,5 +1,6 @@
 package ie.wit.service.access;
 
+import ie.wit.service.util.exceptions.custom_exceptions.InvalidJwtException;
 import ie.wit.service.util.exceptions.custom_exceptions.UserNotAuthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -51,6 +52,52 @@ class JwtService
 	}
 
 	/**
+	 * Validate if the user is an admin
+	 *
+	 * @param jwt The JWT in string format
+	 * @return true if user has admin role, false otherwise
+	 */
+	boolean validateAdmin(String jwt)
+	{
+		Claims claims = parseJwt(jwt);
+		Map<String, String> claimsToBeChecked = new HashMap<>();
+		claimsToBeChecked.put("iss", "JavaTheNutt");
+		claimsToBeChecked.put("auth", "ADMIN");
+		return checkJwtTime(claims) && checkClaims(claims, claimsToBeChecked);
+	}
+
+	/**
+	 * Validate a JWT and return a new one.
+	 *
+	 * @param oldJwt the JWT to be validated
+	 * @return a new JWT
+	 */
+	String requestNewJwt(String oldJwt)
+	{
+		if (isJwtValid(oldJwt)) {
+			Map<String, String> details = getUsernameAndRole(oldJwt);
+			return requestJwt(details.get("user"), details.get("role"));
+		}
+		throw new InvalidJwtException();
+	}
+
+	/**
+	 * return the username and the role of the user that the jwt was issued to
+	 *
+	 * @param jwt the JWT to be parsed
+	 * @return a map containing the username, with key "user", and the role, with key "role"
+	 */
+	Map<String, String> getUsernameAndRole(String jwt)
+	{
+		Map<String, String> details = new HashMap<>();
+		String username = getValue(jwt, "sub");
+		String role = getValue(jwt, "auth");
+		details.put("user", username);
+		details.put("role", role);
+		return details;
+	}
+
+	/**
 	 * The method that creates the JWT.
 	 *
 	 * @param username the username to be included in the claim
@@ -64,7 +111,7 @@ class JwtService
 		long nowMillis = System.currentTimeMillis();
 		long expMillis = nowMillis + (60000 * 60);
 		Date now = new Date(nowMillis);
-		String jwt = Jwts.builder()
+		return Jwts.builder()
 				.setSubject(username)
 				.claim("auth", userRole)
 				.setIssuer("JavaTheNutt")
@@ -73,72 +120,6 @@ class JwtService
 				.setExpiration(new Date(expMillis))
 				.signWith(signatureAlgorithm, secretKeyBytes)
 				.compact();
-		return jwt;
-	}
-
-	//todo: add methods to return a specified portion of the JWT ie. the username or role
-	// FIXME: 28/08/2016 REFACTOR THIS!!!! TOO REPETETIVE.
-	// TODO: Possible Fix for repetition -- have the package-local methods check for validity and then create a Map of the claims to be verified. The exposed methods could then directly check for the claims that they need using the checkClaims() method.
-
-	/**
-	 * Validate if the user is an admin
-	 *
-	 * @param jwt The JWT in string format
-	 * @return true if user has admin role, false otherwise
-	 */
-	// TODO: Refactor this to check JWT validity and then check for admin claim? Could then remove the method below.
-	//TODO: this should return a new JWT
-	boolean validateAdmin(String jwt)
-	{
-		Claims claims = parseJwt(jwt);
-		//Below is a possible implementation to cut the number of method calls in the chain. May not be as robust though.
-		//Perhaps it should stick with its current implementation but cut out the validateAdminClaim() method?
-		Map<String, String> claimsToBeChecked = new HashMap<>();
-		claimsToBeChecked.put("iss", "JavaTheNutt");
-		claimsToBeChecked.put("auth", "ADMIN");
-		return checkJwtTime(claims) && checkClaims(claims, claimsToBeChecked);
-		//return validateAdminClaim(claims);
-	}
-	
-	/**
-	 * return the username and the role of the user that the jwt was issued to
-	 * 
-	 * @param jwt the JWT to be parsed
-	 * @return a map containing the username, with key "user", and the role, with key "role"
-	 */
-	Map<String, String> getUsernameAndRole(String jwt){
-		Map<String, String> details = new HashMap<>();
-		String username = getValue(jwt, "sub");
-		String role = getValue(jwt, "auth");
-		details.put("user", username);
-		details.put("role", role);
-		return details;
-	}
-	/**
-	 * Validate admin claims.
-	 *
-	 * @param claims the claims contained in the JWT
-	 * @return true if user has admin role, false otherwise
-	 */
-	private boolean validateAdminClaim(Claims claims)
-	{
-		logger.debug("Checking claims");
-		return validateJwt(claims) && isAdmin(claims);
-	}
-
-	/**
-	 * Check if the user has admin rights.
-	 *
-	 * @param claims the claims extracted from the JWT
-	 * @return true if user has admin role, false otherwise
-	 */
-	private boolean isAdmin(Claims claims)
-	{
-		logger.debug("Checking for admin authentication");
-		if (!claims.get("auth").equals("ADMIN")) {
-			throw new UserNotAuthorizedException();
-		}
-		return true;
 	}
 
 	/**
@@ -163,18 +144,24 @@ class JwtService
 	}
 
 	/**
-	 * This method will check if a JWT is valid.
+	 * Check the validity of the passed JWT.
+	 * .
 	 *
-	 * @param claims the JWT to be validated
-	 * @return true if jwt is valid, false otherwise
+	 * @param jwt the JWT to be verified
+	 * @return true if it is a valid JWT, false otherwise
 	 */
-	private boolean validateJwt(Claims claims)
+	private boolean isJwtValid(String jwt)
 	{
-		logger.debug("Checking jwt validity");
-		Map<String, String> claimsToBeChecked = new HashMap<>();
-		claimsToBeChecked.put("iss", "JavaTheNutt");
-
-		return checkClaims(claims, claimsToBeChecked) && checkJwtTime(claims);
+		logger.info("Checking jwt validity");
+		Claims claims = parseJwt(jwt);
+		String role = (String) claims.get("auth");
+		logger.info("Current users role: " + role);
+		Map<String, String> required = new HashMap<>(1);
+		required.put("iss", "JavaTheNutt");
+		if (role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("read") || role.equalsIgnoreCase("write")) {
+			return checkJwtTime(claims) && checkClaims(claims, required);
+		}
+		throw new InvalidJwtException();
 	}
 
 	/**
@@ -186,11 +173,7 @@ class JwtService
 	private boolean checkJwtTime(Claims claims)
 	{
 		Date now = new Date(System.currentTimeMillis());
-		//todo: remove unnessecary memory allocation
-		boolean notBefore = claims.getNotBefore().before(now);
-		boolean notExpired = claims.getExpiration().after(now);
-
-		return notBefore && notExpired;
+		return claims.getNotBefore().before(now) && claims.getExpiration().after(now);
 	}
 
 	/**
@@ -205,16 +188,17 @@ class JwtService
 		return Jwts.parser()
 				.setSigningKey(DatatypeConverter.parseBase64Binary(secret)).parseClaimsJws(jwt).getBody();
 	}
-	
+
 	/**
 	 * This will get a specific value from a JWT if it exists.
-	 * 
-	 * @param jwt the JWT
+	 *
+	 * @param jwt           the JWT
 	 * @param requiredValue the key of the value that is required
 	 * @return the value of the claim specified
 	 */
-	private String getValue(String jwt, String requiredValue){
+	private String getValue(String jwt, String requiredValue)
+	{
 		Claims claims = parseJwt(jwt);
-		return claims.get(requiredValue);
+		return claims.get(requiredValue, String.class);
 	}
 }
