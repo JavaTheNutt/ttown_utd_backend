@@ -76,6 +76,7 @@ class JwtService
 		return jwt;
 	}
 
+	//todo: add methods to return a specified portion of the JWT ie. the username or role
 	// FIXME: 28/08/2016 REFACTOR THIS!!!! TOO REPETETIVE.
 	// TODO: Possible Fix for repetition -- have the package-local methods check for validity and then create a Map of the claims to be verified. The exposed methods could then directly check for the claims that they need using the checkClaims() method.
 
@@ -98,7 +99,21 @@ class JwtService
 		return checkJwtTime(claims) && checkClaims(claims, claimsToBeChecked);
 		//return validateAdminClaim(claims);
 	}
-
+	
+	/**
+	 * return the username and the role of the user that the jwt was issued to
+	 * 
+	 * @param jwt the JWT to be parsed
+	 * @return a map containing the username, with key "user", and the role, with key "role"
+	 */
+	Map<String, String> getUsernameAndRole(String jwt){
+		Map<String, String> details = new HashMap<>();
+		String username = getValue(jwt, "sub");
+		String role = getValue(jwt, "auth");
+		details.put("user", username);
+		details.put("role", role);
+		return details;
+	}
 	/**
 	 * Validate admin claims.
 	 *
@@ -155,7 +170,6 @@ class JwtService
 	 */
 	private boolean validateJwt(Claims claims)
 	{
-
 		logger.debug("Checking jwt validity");
 		Map<String, String> claimsToBeChecked = new HashMap<>();
 		claimsToBeChecked.put("iss", "JavaTheNutt");
@@ -172,6 +186,7 @@ class JwtService
 	private boolean checkJwtTime(Claims claims)
 	{
 		Date now = new Date(System.currentTimeMillis());
+		//todo: remove unnessecary memory allocation
 		boolean notBefore = claims.getNotBefore().before(now);
 		boolean notExpired = claims.getExpiration().after(now);
 
@@ -189,5 +204,17 @@ class JwtService
 		logger.debug("Parsing JWT");
 		return Jwts.parser()
 				.setSigningKey(DatatypeConverter.parseBase64Binary(secret)).parseClaimsJws(jwt).getBody();
+	}
+	
+	/**
+	 * This will get a specific value from a JWT if it exists.
+	 * 
+	 * @param jwt the JWT
+	 * @param requiredValue the key of the value that is required
+	 * @return the value of the claim specified
+	 */
+	private String getValue(String jwt, String requiredValue){
+		Claims claims = parseJwt(jwt);
+		return claims.get(requiredValue);
 	}
 }
