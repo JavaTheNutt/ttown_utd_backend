@@ -61,9 +61,6 @@ public class LoginService
 		this.jwtService = jwtService;
 	}
 
-
-	//TODO: This should return a UserOutDto as well as a String for the client session. Perhaps in Map<String, UserOutDto> where the String is the JWT??
-
 	/**
 	 * Take login details and verify.
 	 *
@@ -75,7 +72,6 @@ public class LoginService
 		logger.debug("request received by LoginService.login() for " + loginDetails.getEmailAddress());
 
 		UserEntity user = userService.getOneUserByEmail(loginDetails.getEmailAddress());
-		// FIXME: this needs to return a reference to the user as well as the JWT. Perhaps a new Data Structure, or a Map?
 
 		if (!userValid(user, loginDetails.getPassword())) {
 			throw new UserNotAuthorizedException();
@@ -86,11 +82,18 @@ public class LoginService
 
 	}
 
+	/**
+	 * This returns the name of the users role based on the integer value.
+	 * 
+	 * @param user the user whos role name is required
+	 * @return the name of the users role
+	 */
 	private String getUsersRole(UserEntity user)
 	{
 		return Role.getStringValueFromInt(user.getRole());
 	}
 
+	//todo: delete this method if testing the other one is unsuccessful
 	/**
 	 * Validate a passed JWT and return a new one.
 	 *
@@ -99,12 +102,38 @@ public class LoginService
 	 */
 	public String validateAndRegenerateJwt(Map<String, String> details)
 	{
+		//todo: refactor this as the required details are already contained in the JWT. This should be able to request a new JWT using the information contained in the old one.
 		if (validateJwt(details.get("jwt"))) {
 			return jwtService.requestJwt(details.get("emailAddress"), details.get("role"));
 		}
 		return "Not Authorized";
 	}
-
+	
+	/**
+	 * Validate a passed jwt and return a new one
+	 * 
+	 * @param jwt the old JWT
+	 * @return a new JWT
+	 */
+	public String validateAndRegenerateJwt(String jwt){
+		if(validateJwt(jwt){
+			Map<String, String> details = jwtService.getUsernameAndRole(jwt);
+			return jwtService.requestJwt(details.get("user"), details.get("role");
+		}
+		return "Not Authorized";
+	}
+	/**
+	 * This will return a user based on the jwt passed
+	 * 
+	 * @param jwt the JWT sent in the header of the request
+	 * @return the user who was given the JWT
+	 */
+	public UserEntity getUserFromJwt(String jwt){
+		//1. parse jwt.
+		//2. get the user contained in the jwt 
+		//3. return the user
+	}
+	
 	/**
 	 * This method will take a JWT in String form and will validate whether the user that sent it is an admin.
 	 *
