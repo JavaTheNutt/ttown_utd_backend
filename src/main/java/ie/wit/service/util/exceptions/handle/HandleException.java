@@ -32,10 +32,23 @@ public class HandleException
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ClientErrorInformation> handleUserNotFound(HttpServletRequest req, Exception e)
 	{
-		logger.debug("Warning, UserNotFoundException thrown. ");
+		logger.error("Warning, UserNotFoundException thrown. ");
 		return handleUnauthorized(req, e);
 	}
-
+	
+	/**
+	 * Handle InvalidJwtException.
+	 *
+	 * @param req the request that triggered the exception
+	 * @param e   the exception that was thrown
+	 * @return a response entity containing the exception
+	 */
+	@ExceptionHandler(InvalidJwtException.class)
+	public ResponseEntity<ClientErrorInformation> handleInvalidJwtException(HttpServletRequest req, Exception e){
+		logger.error("Warning, InvalidJwtException thrown.");
+		return handleUnauthorized(req, e);
+	}
+	
 	/**
 	 * Handle UserNotAuthorizedException.
 	 *
@@ -60,7 +73,7 @@ public class HandleException
 	@ExceptionHandler(PasswordMismatchException.class)
 	public ResponseEntity<ClientErrorInformation> handlePasswordMismatch(HttpServletRequest req, Exception e)
 	{
-		logger.debug("Warning, PasswordMismatchException thrown. ");
+		logger.error("Warning, PasswordMismatchException thrown. ");
 		return handleUnauthorized(req, e);
 	}
 
@@ -74,7 +87,7 @@ public class HandleException
 	@ExceptionHandler(InvalidClaimException.class)
 	public ResponseEntity<ClientErrorInformation> handleInvalidClaim(HttpServletRequest req, Exception e)
 	{
-		logger.debug("Warning, InvalidClaimException thrown. ");
+		logger.error("Warning, InvalidClaimException thrown. ");
 		return handleUnauthorized(req, e);
 	}
 
@@ -88,7 +101,7 @@ public class HandleException
 	@ExceptionHandler(MissingClaimException.class)
 	public ResponseEntity<ClientErrorInformation> handleMissingClaim(HttpServletRequest req, Exception e)
 	{
-		logger.debug("Warning, MissingClaimException thrown. ");
+		logger.error("Warning, MissingClaimException thrown. ");
 		return handleUnauthorized(req, e);
 	}
 
@@ -102,7 +115,7 @@ public class HandleException
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ClientErrorInformation> handleException(HttpServletRequest req, Exception e)
 	{
-		logger.debug("Warning, an unknown error has occured");
+		logger.error("Warning, an unknown error has occured");
 		return handleInternalServerError(req, e);
 	}
 
@@ -115,7 +128,7 @@ public class HandleException
 	 */
 	private ResponseEntity<ClientErrorInformation> handleUnauthorized(HttpServletRequest req, Exception e)
 	{
-		logger.debug("Returning a 401 status to the client");
+		logger.error("Returning a 401 status to the client");
 		return handleException(req, e, HttpStatus.UNAUTHORIZED);
 	}
 
@@ -128,7 +141,7 @@ public class HandleException
 	 */
 	private ResponseEntity<ClientErrorInformation> handleInternalServerError(HttpServletRequest req, Exception e)
 	{
-		logger.debug("Returning a 500 status code to the client");
+		logger.error("Returning a 500 status code to the client");
 		return handleException(req, e, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
