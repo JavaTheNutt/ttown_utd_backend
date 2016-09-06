@@ -1,5 +1,7 @@
 package ie.wit.model.dto.out;
 
+import ie.wit.model.entity.DoctorEntity;
+
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
@@ -8,7 +10,7 @@ import java.util.Optional;
  *
  * @author Joe Wemyss
  */
-public class DoctorOutDto implements IOut
+public class DoctorOutDto
 {
 	/**
 	 * Representation of the primary key.
@@ -52,23 +54,18 @@ public class DoctorOutDto implements IOut
 	}
 
 	/**
-	 * Full constructor
+	 * Constructor using the persisted entity.
 	 *
-	 * @param id            the primary key of the entity
-	 * @param firstName     the doctors first name
-	 * @param surname       the doctors surname
-	 * @param streetAddress the doctors street address
-	 * @param townAddress   the doctors town address
-	 * @param contactNumber the doctors contact number
+	 * @param doctor the persisted entity for doctor
 	 */
-	public DoctorOutDto(Long id, String firstName, String surname, String streetAddress, String townAddress, String contactNumber)
+	public DoctorOutDto(DoctorEntity doctor)
 	{
-		this.id = id;
-		this.firstName = firstName;
-		this.surname = surname;
-		this.streetAddress = streetAddress;
-		this.townAddress = townAddress;
-		this.contactNumber = contactNumber;
+		this.id = doctor.getId();
+		this.firstName = doctor.getFirstName().orElse("Unknown");
+		this.surname = doctor.getSurname().orElse("Unknown");
+		this.streetAddress = doctor.getStreetAddress().orElse("Unknown");
+		this.townAddress = doctor.getTownAddress();
+		this.contactNumber = doctor.getContactNumber();
 	}
 
 	/**

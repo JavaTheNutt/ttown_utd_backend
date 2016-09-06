@@ -1,6 +1,7 @@
 package ie.wit.model.entity;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 /**
  * This class represents a doctor entity that JPA will persist to the database
@@ -45,6 +46,7 @@ public class DoctorEntity
 	/**
 	 * The doctors contact number
 	 */
+	@Basic(optional = false)
 	@Column(name = "contact_number")
 	private String contactNumber;
 
@@ -100,9 +102,9 @@ public class DoctorEntity
 	 *
 	 * @return the first name
 	 */
-	public String getFirstName()
+	public Optional<String> getFirstName()
 	{
-		return this.firstName;
+		return Optional.ofNullable(this.firstName);
 	}
 
 	/**
@@ -120,9 +122,9 @@ public class DoctorEntity
 	 *
 	 * @return the surname
 	 */
-	public String getSurname()
+	public Optional<String> getSurname()
 	{
-		return this.surname;
+		return Optional.ofNullable(this.surname);
 	}
 
 	/**
@@ -140,9 +142,9 @@ public class DoctorEntity
 	 *
 	 * @return the street address
 	 */
-	public String getStreetAddress()
+	public Optional<String> getStreetAddress()
 	{
-		return this.streetAddress;
+		return Optional.ofNullable(this.streetAddress);
 	}
 
 	/**
@@ -162,7 +164,7 @@ public class DoctorEntity
 	 */
 	public String getTownAddress()
 	{
-		return this.townAddress;
+		return this.townAddress == null ? this.townAddress : "Thomastown";
 	}
 
 	/**
@@ -172,7 +174,7 @@ public class DoctorEntity
 	 */
 	public void setTownAddress(String townAddress)
 	{
-		this.townAddress = townAddress;
+		this.townAddress = townAddress == null ? townAddress : "Thomastown";
 	}
 
 	/**

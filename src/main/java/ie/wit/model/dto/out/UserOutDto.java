@@ -8,7 +8,7 @@ import ie.wit.model.enums.Role;
  *
  * @author Joe Wemyss
  */
-public class UserOutDto implements IOut
+public class UserOutDto
 {
 	/**
 	 * The users email address

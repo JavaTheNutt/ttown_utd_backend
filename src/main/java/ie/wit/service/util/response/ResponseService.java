@@ -1,5 +1,7 @@
 package ie.wit.service.util.response;
 
+import ie.wit.service.access.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -12,17 +14,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResponseService
 {
+	private LoginService loginService;
+
+	@Autowired
+	public ResponseService(LoginService loginService)
+	{
+		this.loginService = loginService;
+	}
+
 	/**
 	 * This method will create a new set of http headers containing the JWT for authentication and set the length to the length of the content + 10.
 	 *
-	 * @param jwt        the JWT to be added to the headers
+	 * @param oldJwt     the old jwt last given by the system
 	 * @param bodyLength the length of the body of the response
 	 * @return a set of HttpHeaders
 	 */
-	public HttpHeaders adjustHeaders(String jwt, int bodyLength)
+	public HttpHeaders adjustHeaders(String oldJwt, int bodyLength)
 	{
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
+		String jwt = loginService.validateAndRegenerateJwt(oldJwt);
 		headers.add("auth", jwt);
 		headers.setContentLength(bodyLength + 10);
 		return headers;

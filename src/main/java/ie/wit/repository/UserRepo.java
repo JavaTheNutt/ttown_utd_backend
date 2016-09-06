@@ -2,13 +2,14 @@ package ie.wit.repository;
 
 import ie.wit.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * DAO for UserEntity
+ * DAO for {@link UserEntity}
  *
  * @author Joe Wemyss
- * @see ie.wit.model.entity.UserEntity UserEntity
  */
+@Repository
 public interface UserRepo extends JpaRepository<UserEntity, Long>
 {
 	/**
