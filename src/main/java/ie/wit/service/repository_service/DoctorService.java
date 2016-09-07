@@ -66,4 +66,15 @@ public class DoctorService
 	{
 		doctorRepo.delete(id);
 	}
+	
+	/**
+	 * Update a doctor.
+	 * 
+	 * @param doctorIn the doctor to be updated
+	 * @return the updated doctor in outward data tranfer object format
+	 */
+	public DoctorOutDto updateDoctor(DoctorUpdate doctorIn)
+	{
+		return new DoctorOutDto(doctorRepo.saveAndFlush(doctorIn.getAsEntity()));
+	}
 }
