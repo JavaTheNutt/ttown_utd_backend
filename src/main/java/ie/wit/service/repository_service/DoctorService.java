@@ -56,4 +56,14 @@ public class DoctorService
 	{
 		doctorRepo.delete(docIn.getAsEntity);
 	}
+	
+	/**
+	 * Delete a doctor from the database.
+	 * 
+	 * @param id the id of the doctor ot be deleted.
+	 */
+	public void deleteDoctor(Long id)
+	{
+		doctorRepo.delete(id);
+	}
 }
