@@ -1,5 +1,7 @@
 package ie.wit.model.entity;
 
+import ie.wit.model.dto.out.DoctorOutDto;
+
 import javax.persistence.*;
 import java.util.Optional;
 
@@ -211,5 +213,10 @@ public class DoctorEntity
 				", townAddress='" + townAddress + '\'' +
 				", contactNumber='" + contactNumber + '\'' +
 				'}';
+	}
+
+	public DoctorOutDto getAsDto()
+	{
+		return new DoctorOutDto(this.id, this.getFirstName().orElse("Unknown"), this.getSurname().orElse("Unknown"), this.getStreetAddress().orElse("Unknown"), this.getTownAddress(), this.getContactNumber());
 	}
 }

@@ -25,17 +25,15 @@ public class ResponseService
 	/**
 	 * This method will create a new set of http headers containing the JWT for authentication and set the length to the length of the content + 10.
 	 *
-	 * @param oldJwt     the old jwt last given by the system
-	 * @param bodyLength the length of the body of the response
+	 * @param oldJwt the old jwt last given by the system
 	 * @return a set of HttpHeaders
 	 */
-	public HttpHeaders adjustHeaders(String oldJwt, int bodyLength)
+	public HttpHeaders adjustHeaders(String oldJwt)
 	{
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		String jwt = loginService.validateAndRegenerateJwt(oldJwt);
 		headers.add("auth", jwt);
-		headers.setContentLength(bodyLength + 10);
 		return headers;
 
 	}

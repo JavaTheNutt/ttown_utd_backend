@@ -61,7 +61,7 @@ public class DoctorController
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<DoctorOutDto> getOne(@PathVariable Long id, @RequestHeader("auth") String oldJwt)
 	{
-		HttpHeaders headers = responseService.adjustHeaders(oldJwt, 100);
+		HttpHeaders headers = responseService.adjustHeaders(oldJwt);
 		DoctorOutDto doctor = doctorService.getOneDoctor(id);
 		return new ResponseEntity<>(doctor, headers, HttpStatus.OK);
 	}
@@ -76,8 +76,9 @@ public class DoctorController
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<DoctorOutDto> addDoctor(@RequestBody @Valid DoctorInDto docIn, @RequestHeader("auth") String oldJwt)
 	{
-		HttpHeaders headers = responseService.adjustHeaders(oldJwt, 100);
+		HttpHeaders headers = responseService.adjustHeaders(oldJwt);
 		DoctorOutDto doctor = doctorService.insertOneDoctor(docIn);
 		return new ResponseEntity<>(doctor, headers, HttpStatus.OK);
 	}
+
 }

@@ -46,7 +46,7 @@ public class DoctorService
 	public DoctorOutDto getOneDoctor(Long id)
 	{
 		logger.info("Getting doctor with an id of " + id);
-		return new DoctorOutDto(doctorRepo.findOne(id));
+		return doctorRepo.findOne(id).getAsDto();
 	}
 
 	/**

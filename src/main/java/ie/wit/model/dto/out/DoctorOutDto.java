@@ -3,7 +3,6 @@ package ie.wit.model.dto.out;
 import ie.wit.model.entity.DoctorEntity;
 
 import javax.validation.constraints.NotNull;
-import java.util.Optional;
 
 /**
  * This will be the representation of a doctor that will be sent out via the doctor endpoint
@@ -69,6 +68,26 @@ public class DoctorOutDto
 	}
 
 	/**
+	 * Instantiates a new Doctor out dto.
+	 *
+	 * @param id            the id
+	 * @param firstName     the first name
+	 * @param surname       the surname
+	 * @param streetAddress the street address
+	 * @param townAddress   the town address
+	 * @param contactNumber the contact number
+	 */
+	public DoctorOutDto(Long id, String firstName, String surname, String streetAddress, String townAddress, String contactNumber)
+	{
+		this.id = id;
+		this.firstName = firstName;
+		this.surname = surname;
+		this.streetAddress = streetAddress;
+		this.townAddress = townAddress;
+		this.contactNumber = contactNumber;
+	}
+
+	/**
 	 * Accessor for primary key.
 	 *
 	 * @return the primary key
@@ -93,9 +112,9 @@ public class DoctorOutDto
 	 *
 	 * @return doctor first name, wrapped in a java 8 Optional to prevent NPE
 	 */
-	public Optional<String> getFirstName()
+	public String getFirstName()
 	{
-		return Optional.ofNullable(firstName);
+		return firstName;
 	}
 
 	/**
@@ -113,9 +132,9 @@ public class DoctorOutDto
 	 *
 	 * @return doctor surname, wrapped in a java 8 Optional to prevent NPE
 	 */
-	public Optional<String> getSurname()
+	public String getSurname()
 	{
-		return Optional.ofNullable(surname);
+		return surname;
 	}
 
 	/**
@@ -133,9 +152,9 @@ public class DoctorOutDto
 	 *
 	 * @return doctor street address, wrapped in a java 8 Optional to prevent NPE
 	 */
-	public Optional<String> getStreetAddress()
+	public String getStreetAddress()
 	{
-		return Optional.ofNullable(streetAddress);
+		return streetAddress;
 	}
 
 	/**
