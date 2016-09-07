@@ -25,4 +25,17 @@ public class TestDoctorService
 		DoctorOutDto doctor = doctorService.getOneDoctor(1L);
 		assertTrue("First name does not match", doctor.getFirstName().isPresent());
 	}
+	@Test
+	public void testInsert()
+	{
+		try{
+			DoctorInDto docIn = new DoctorInDto("James", "Drynan", "Low Street", null, "05123456");
+			DoctorOutDto docOut = doctorService.insertDoctor(docIn);
+			assertEquals("The first name does not match", "James", docOut.getFirstName());
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			doctorService.deleteDoctor(docOut.getId());
+		}
+	}
 }
