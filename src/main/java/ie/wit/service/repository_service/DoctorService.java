@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 public class DoctorService
 {
 	/**
+	 * Logger for this class.
+	 */
+	Logger logger = LoggerFactory.getLogger(DoctorService.class)
+	
+	/**
 	 * autowired reference to the {@link DoctorRepo}
 	 */
 	private DoctorRepo doctorRepo;
@@ -33,6 +38,7 @@ public class DoctorService
 	 */
 	public DoctorOutDto getOneDoctor(Long id)
 	{
+		logger.info("Getting doctor with an id of " + id);
 		return new DoctorOutDto(doctorRepo.findOne(id));
 	}
 	
@@ -43,6 +49,7 @@ public class DoctorService
 	 */
 	public List<DoctorOutDto> getAllDoctors()
 	{
+		logger.info("Getting all doctors");
 		return doctorRepo.findAll().stream().map(doc -> new DoctorOutDto(doc)).collect(Arrays.asList());
 	}
 	
@@ -54,6 +61,7 @@ public class DoctorService
 	 */
 	public DoctorOutDto insertOneDoctor(DoctorInDto docIn)
 	{
+		logger.info("Inserting new doctor");
 		return new DoctorOutDto(doctorRepo.saveAndFlush(docIn.getAsEntity()));
 	}
 	
@@ -64,6 +72,7 @@ public class DoctorService
 	 */
 	public void deleteDoctor(DoctorUpdate docIn)
 	{
+		logger.info("Deleting a doctor");
 		doctorRepo.delete(docIn.getAsEntity);
 	}
 	
@@ -74,6 +83,7 @@ public class DoctorService
 	 */
 	public void deleteDoctor(Long id)
 	{
+		logger.info("Deleting a doctor with an id of " + id);
 		doctorRepo.delete(id);
 	}
 	
@@ -85,6 +95,7 @@ public class DoctorService
 	 */
 	public DoctorOutDto updateDoctor(DoctorUpdate doctorIn)
 	{
+		logger.info("Updating a doctor with an id of " + doctorIn.getId());
 		return new DoctorOutDto(doctorRepo.saveAndFlush(doctorIn.getAsEntity()));
 	}
 }
