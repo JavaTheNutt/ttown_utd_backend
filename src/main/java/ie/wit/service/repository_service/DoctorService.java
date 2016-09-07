@@ -40,9 +40,10 @@ public class DoctorService
 	 * Persist a doctor to the database
 	 * 
 	 * @param docIn the doctor in inward dto form
+	 * @return the doctor in outward dto form
 	 */
-	public void insertOneDoctor(DoctorInDto docIn)
+	public DoctorOutDto insertOneDoctor(DoctorInDto docIn)
 	{
-		doctorRepo.saveAndFlush(docIn.getAsEntity());
+		return new DoctorOutDto(doctorRepo.saveAndFlush(docIn.getAsEntity()));
 	}
 }
