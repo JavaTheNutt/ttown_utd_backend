@@ -33,14 +33,15 @@ class UserService
 
 
 	/**
-	 * The reference to the hasing service
+	 * The reference to the hashing service
 	 */
 	private HashingService hashingService;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param userRepo the user repository
+	 * @param userRepo       the user repository
+	 * @param hashingService the hashing service
 	 */
 	@Autowired
 	UserService(UserRepo userRepo, HashingService hashingService)

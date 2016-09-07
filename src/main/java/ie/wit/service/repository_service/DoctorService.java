@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,7 @@ public class DoctorService
 	 * Logger for this class.
 	 */
 	private Logger logger = LoggerFactory.getLogger(DoctorService.class);
-	
+
 	/**
 	 * autowired reference to the {@link DoctorRepo}
 	 */
@@ -49,10 +48,10 @@ public class DoctorService
 		logger.info("Getting doctor with an id of " + id);
 		return new DoctorOutDto(doctorRepo.findOne(id));
 	}
-	
+
 	/**
 	 * Get all doctors.
-	 * 
+	 *
 	 * @return a list of doctors
 	 */
 	public List<DoctorOutDto> getAllDoctors()
@@ -60,10 +59,10 @@ public class DoctorService
 		logger.info("Getting all doctors");
 		return doctorRepo.findAll().stream().map(DoctorOutDto::new).collect(Collectors.toList());
 	}
-	
+
 	/**
 	 * Persist a doctor to the database
-	 * 
+	 *
 	 * @param docIn the doctor in inward dto form
 	 * @return the doctor in outward dto form
 	 */
@@ -72,10 +71,10 @@ public class DoctorService
 		logger.info("Inserting new doctor");
 		return new DoctorOutDto(doctorRepo.saveAndFlush(docIn.getAsEntity()));
 	}
-	
+
 	/**
 	 * Delete a doctor from the database.
-	 * 
+	 *
 	 * @param docIn the doctor to be deleted
 	 */
 	public void deleteDoctor(DoctorUpdate docIn)
@@ -86,7 +85,7 @@ public class DoctorService
 
 	/**
 	 * Delete a doctor from the database.
-	 * 
+	 *
 	 * @param id the id of the doctor ot be deleted.
 	 */
 	public void deleteDoctor(Long id)
@@ -94,10 +93,10 @@ public class DoctorService
 		logger.info("Deleting a doctor with an id of " + id);
 		doctorRepo.delete(id);
 	}
-	
+
 	/**
 	 * Update a doctor.
-	 * 
+	 *
 	 * @param doctorIn the doctor to be updated
 	 * @return the updated doctor in outward data tranfer object format
 	 */

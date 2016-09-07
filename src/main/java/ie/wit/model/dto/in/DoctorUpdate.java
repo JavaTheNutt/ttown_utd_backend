@@ -4,7 +4,7 @@ import ie.wit.model.entity.DoctorEntity;
 
 /**
  * This class represents a data transfer object for a doctor that will be updated.
- * 
+ *
  * @author Joe Wemyss
  */
 public class DoctorUpdate extends DoctorInDto
@@ -13,12 +13,14 @@ public class DoctorUpdate extends DoctorInDto
 	 * The primary key of the doctor
 	 */
 	private Long id;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public DoctorUpdate(){}
-	
+	public DoctorUpdate()
+	{
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -27,27 +29,28 @@ public class DoctorUpdate extends DoctorInDto
 		super(firstName, surname, streetAddress, townAddress, contactNumber);
 		this.id = id;
 	}
-	
+
 	/**
-	 * Accessor for id
-	 * 
-	 * @param id the primary key of the doctor
+	 * Gets id.
+	 *
+	 * @return the id
 	 */
 	public Long getId()
 	{
 		return id;
 	}
-	
+
+
 	/**
-	 * Mutator for the primary key
-	 * 
-	 * @return the primary key
+	 * Sets id.
+	 *
+	 * @param id the id
 	 */
 	public void setId(Long id)
 	{
 		this.id = id;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

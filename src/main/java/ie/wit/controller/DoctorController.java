@@ -65,16 +65,17 @@ public class DoctorController
 		DoctorOutDto doctor = doctorService.getOneDoctor(id);
 		return new ResponseEntity<>(doctor, headers, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Endpoint for adding a doctor.
-	 * 
-	 * @param docIn the doctor to be added 
+	 *
+	 * @param docIn  the doctor to be added
 	 * @param oldJwt the jwt issued to the suer with the last request
 	 * @return the doctor in outward dto format
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<DoctorOutDto> addDoctor(@RequestBody @Valid DoctorInDto docIn, @RequestHeader("auth") String oldJwt){
+	public ResponseEntity<DoctorOutDto> addDoctor(@RequestBody @Valid DoctorInDto docIn, @RequestHeader("auth") String oldJwt)
+	{
 		HttpHeaders headers = responseService.adjustHeaders(oldJwt, 100);
 		DoctorOutDto doctor = doctorService.insertOneDoctor(docIn);
 		return new ResponseEntity<>(doctor, headers, HttpStatus.OK);
