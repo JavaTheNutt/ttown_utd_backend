@@ -1,5 +1,7 @@
 package ie.wit.model.dto.in;
 
+import ie.wit.model.entity.DoctorEntity;
+
 /**
  * This class represents a data transfer object for a doctor that will be updated.
  * 

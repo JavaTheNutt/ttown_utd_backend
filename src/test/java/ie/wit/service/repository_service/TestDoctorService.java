@@ -1,5 +1,7 @@
 package ie.wit.service.repository_service;
 
+import ie.wit.model.dto.in.DoctorInDto;
+import ie.wit.model.dto.in.DoctorUpdate;
 import ie.wit.model.dto.out.DoctorOutDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -28,13 +31,14 @@ public class TestDoctorService
 	
 	@Test
 	public void testUpdate(){
+		DoctorOutDto docOut = null;
 		try{
 			DoctorInDto docIn = new DoctorInDto("James", "Drynan", "Low Street", null, "05123456");
-			DoctorOutDto docOut = doctorService.insertDoctor(docIn);
-			assertEquals("The first name does not match", "James", docOut.getFirstName());
-			DoctorUpdateDto docIn2 = new DoctorUpdateDto(docOut.getId(), "John", docOut.getSurname(), docOut.getStreetAddress(), docOut.getTownAddress(), docOut.getContactNumber());
+			docOut = doctorService.insertOneDoctor(docIn);
+			assertEquals("The first name does not match", "James", docOut.getFirstName().get());
+			DoctorUpdate docIn2 = new DoctorUpdate(docOut.getId(), "John", docOut.getSurname().orElse("Unknown"), docOut.getStreetAddress().orElse("Unknown"), docOut.getTownAddress(), docOut.getContactNumber());
 			DoctorOutDto docOut2 = doctorService.updateDoctor(docIn2);
-			assertEquals("The first name does not match", "John", docOut2.getFirstName());
+			assertEquals("The first name does not match", "John", docOut2.getFirstName().get());
 			assertEquals("The town address does not match", "Thomastown", docOut2.getTownAddress());
 		}catch(Exception e){
 			e.printStackTrace();

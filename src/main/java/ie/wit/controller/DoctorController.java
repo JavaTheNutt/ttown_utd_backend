@@ -1,5 +1,6 @@
 package ie.wit.controller;
 
+import ie.wit.model.dto.in.DoctorInDto;
 import ie.wit.model.dto.out.DoctorOutDto;
 import ie.wit.service.repository_service.DoctorService;
 import ie.wit.service.util.response.ResponseService;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * This will be the endpoint relating to Doctors
@@ -71,8 +74,8 @@ public class DoctorController
 	 * @return the doctor in outward dto format
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<DcotorOutDto> addDoctor(@RequestBody @Valid DoctorInDto docIn @RequestHeader("auth") String oldJwt){
-		HttpHeaders headers = responseService.adjsustHeaders(oldJwt, 100);
+	public ResponseEntity<DoctorOutDto> addDoctor(@RequestBody @Valid DoctorInDto docIn, @RequestHeader("auth") String oldJwt){
+		HttpHeaders headers = responseService.adjustHeaders(oldJwt, 100);
 		DoctorOutDto doctor = doctorService.insertOneDoctor(docIn);
 		return new ResponseEntity<>(doctor, headers, HttpStatus.OK);
 	}

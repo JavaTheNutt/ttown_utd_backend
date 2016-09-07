@@ -1,8 +1,16 @@
 package ie.wit.service.repository_service;
 
+import ie.wit.model.dto.in.DoctorInDto;
+import ie.wit.model.dto.in.DoctorUpdate;
 import ie.wit.model.dto.out.DoctorOutDto;
 import ie.wit.repository.DoctorRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This will be the service that will act as a link between the {@link DoctorService} and the {@link ie.wit.controller.DoctorController}
@@ -13,7 +21,7 @@ public class DoctorService
 	/**
 	 * Logger for this class.
 	 */
-	Logger logger = LoggerFactory.getLogger(DoctorService.class)
+	private Logger logger = LoggerFactory.getLogger(DoctorService.class);
 	
 	/**
 	 * autowired reference to the {@link DoctorRepo}
@@ -50,7 +58,7 @@ public class DoctorService
 	public List<DoctorOutDto> getAllDoctors()
 	{
 		logger.info("Getting all doctors");
-		return doctorRepo.findAll().stream().map(doc -> new DoctorOutDto(doc)).collect(Arrays.asList());
+		return doctorRepo.findAll().stream().map(DoctorOutDto::new).collect(Collectors.toList());
 	}
 	
 	/**
@@ -73,9 +81,9 @@ public class DoctorService
 	public void deleteDoctor(DoctorUpdate docIn)
 	{
 		logger.info("Deleting a doctor");
-		doctorRepo.delete(docIn.getAsEntity);
+		doctorRepo.delete(docIn.getId());
 	}
-	
+
 	/**
 	 * Delete a doctor from the database.
 	 * 

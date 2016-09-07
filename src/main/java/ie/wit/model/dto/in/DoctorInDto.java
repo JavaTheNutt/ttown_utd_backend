@@ -56,7 +56,12 @@ public class DoctorInDto
         this.firstName = firstName;
         this.surname = surname;
         this.streetAddress = streetAddress;
-        this.townAddress = townAddress == null ? townAddress : "Thomastown";
+        if(townAddress == null){
+        	townAddress = "Thomastown";
+		}
+		this.townAddress = townAddress;
+
+        //this.townAddress = townAddress == null ? townAddress : "Thomastown";
         this.contactNumber = contactNumber;
     }
     

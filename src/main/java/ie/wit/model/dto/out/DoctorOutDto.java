@@ -172,11 +172,11 @@ public class DoctorOutDto
 	/**
 	 * Accessor for contactNumber
 	 *
-	 * @return doctor contact number, wrapped in a java 8 Optional to prevent NPE
+	 * @return doctor contact number
 	 */
-	public Optional<String> getContactNumber()
+	public String getContactNumber()
 	{
-		return Optional.ofNullable(contactNumber);
+		return contactNumber;
 	}
 
 	/**
