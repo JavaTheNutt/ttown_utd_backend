@@ -35,4 +35,14 @@ public class DoctorService
 	{
 		return new DoctorOutDto(doctorRepo.findOne(id));
 	}
+	
+	/**
+	 * Persist a doctor to the database
+	 * 
+	 * @param docIn the doctor in inward dto form
+	 */
+	public void insertOneDoctor(DoctorInDto docIn)
+	{
+		doctorRepo.saveAndFlush(docIn.getAsEntity());
+	}
 }
