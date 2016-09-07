@@ -37,6 +37,16 @@ public class DoctorService
 	}
 	
 	/**
+	 * Get all doctors.
+	 * 
+	 * @return a list of doctors
+	 */
+	public List<DoctorOutDto> getAllDoctors()
+	{
+		return doctorRepo.findAll().stream().map(doc -> new DoctorOutDto(doc)).collect(Arrays.asList());
+	}
+	
+	/**
 	 * Persist a doctor to the database
 	 * 
 	 * @param docIn the doctor in inward dto form
