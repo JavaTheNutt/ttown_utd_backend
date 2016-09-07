@@ -46,4 +46,14 @@ public class DoctorService
 	{
 		return new DoctorOutDto(doctorRepo.saveAndFlush(docIn.getAsEntity()));
 	}
+	
+	/**
+	 * Delete a doctor from the database.
+	 * 
+	 * @param docIn the doctor to be deleted
+	 */
+	public void deleteDoctor(DoctorUpdate docIn)
+	{
+		doctorRepo.delete(docIn.getAsEntity);
+	}
 }
