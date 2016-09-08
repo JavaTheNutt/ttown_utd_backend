@@ -125,6 +125,8 @@ INSERT INTO `High_Fee` VALUES (3, 130.0);
 INSERT INTO `High_Fee` VALUES (4, 180.0);
 INSERT INTO `High_Fee` VALUES (5, 220.0);
 
+********************************************************************************************
+
 CREATE TABLE IF NOT EXISTS `User` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
 	`email_address` VARCHAR(30) NOT NULL,
@@ -140,3 +142,24 @@ INSERT INTO `User`(`email_address`, `password`, `first_name`, `surname`, `role`)
 INSERT INTO `User`(`email_address`, `password`, `first_name`, `surname`, `role`) VALUES ('michellepower3@gmail.com', '$2a$04$ixT1MkSyNq.NVLyQMc.VWuAIivEjrW.8Tks/rycrVroN1nQVU9ijq', 'Michelle', 'Power', 2);
 INSERT INTO `User`(`email_address`, `password`, `first_name`, `surname`, `role`) VALUES ('agwemyss3@gmail.com', '$2a$04$ixT1MkSyNq.NVLyQMc.VWuAIivEjrW.8Tks/rycrVroN1nQVU9ijq', 'Agnes', 'Wemyss', 3);
 
+****************************************************************************************************************************
+
+CREATE TABLE IF NOT EXISTS `Manager`(
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`first_name` VARCHAR(30) NOT NULL,
+	`surname` VARCHAR(30) NOT NULL,
+	`street_address` VARCHAR(30) NOT NULL,
+	`town_address` VARCHAR(30) NOT NULL DEFAULT 'Thomastown',
+	`email_address` VARCHAR(30),
+	`contact_number` VARCHAR(30) NOT NULL,
+	CONSTRAINT `manager_pk` PRIMARY KEY `Manager`(`id`)
+);
+ALTER TABLE `Manager` ADD UNIQUE INDEX `unique_manager_email` (`email_address`);
+INSERT INTO `Manager`(`first_name`, `surname`, `street_address`, `town_address`, `email_address`, `contact_number`) VALUES(
+	'Joe',
+	'Bloggs', 
+	'Mill Street',
+	'Thomastown',
+	'joe@bloggs.com',
+	'087654321'
+);
