@@ -33,6 +33,14 @@ CREATE TABLE IF NOT EXISTS `Family`(
 );
 ALTER TABLE `Family` ADD UNIQUE INDEX `family_name`(`family_name`);
 ALTER TABLE `Family` ADD INDEX `willing_volunteer`(`willing_to_volunteer`);
+INSERT INTO `Family` (`family_name`, `street_address`, `town_address`, `paid_so_far`, `willing_to_volunteer`, `doctor`) VALUES(
+	'Wemyss',
+	'Jerpoint Abbey',
+	'Thomastown',
+	0.0,
+	TRUE,
+	1
+);
 
 /*************************************************************************************************/
 CREATE TABLE IF NOT EXISTS `Parent`(
@@ -46,6 +54,20 @@ CREATE TABLE IF NOT EXISTS `Parent`(
 	CONSTRAINT `parent_family_fk` FOREIGN KEY `Parent`(`family`) REFERENCES `Family`(`id`)
 );
 ALTER TABLE `Parent` ADD INDEX `parent_name` (`first_name`, `surname`);
+INSERT INTO `Parent` (`first_name`, `surname`, `contact_number`, `email`, `family`) VALUES(
+	'Joe',
+	'Wemyss',
+	'0899999901',
+	'joewemyss3@gmail.com',
+	1
+);
+INSERT INTO `Parent` (`first_name`, `surname`, `contact_number`, `email`, `family`) VALUES(
+	'Michelle',
+	'Power',
+	'0897999901',
+	'michellepower3@gmail.com',
+	1
+);
 /*************************************************************************************************/
 
 CREATE TABLE IF NOT EXISTS `Player`(
@@ -62,6 +84,9 @@ CREATE TABLE IF NOT EXISTS `Player`(
 );
 ALTER TABLE `Player` ADD INDEX `player_year` (`year_of_birth`);
 ALTER TABLE `Player` ADD INDEX `player_name` (`first_name`, `surname`);
+INSERT INTO `Player`(`first_name`, `surname`, `is_male`, `year_of_birth`, `month_of_birth`, `day_of_birth`, `family`) VALUES ('Joe', 'Wemyss', TRUE, 2005, 11, 7, 1);
+INSERT INTO `Player`(`first_name`, `surname`, `is_male`, `year_of_birth`, `month_of_birth`, `day_of_birth`, `family`) VALUES ('Josephine', 'Wemyss', FALSE, 2000, 11, 7, 1);
+INSERT INTO `Player`(`first_name`, `surname`, `is_male`, `year_of_birth`, `month_of_birth`, `day_of_birth`, `family`) VALUES ('James', 'Wemyss', True, 2000, 11, 7, 1);
 /*************************************************************************************************/
 
 CREATE TABLE IF NOT EXISTS `Medical_Note`(
@@ -72,7 +97,9 @@ CREATE TABLE IF NOT EXISTS `Medical_Note`(
 	CONSTRAINT `medical_pk` PRIMARY KEY `MedicalNote`(`id`),
 	CONSTRAINT `medical_player_fk` FOREIGN KEY `MedicalNote`(`player`) REFERENCES `Player`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+INSERT INTO `Medical_Note`(`condition_name`, `description`, `player`) VALUES ('Asthma', 'Severe asthma', 1);
+INSERT INTO `Medical_Note`(`condition_name`, `description`, `player`) VALUES ('Asthma', 'Severe asthma', 2);
+INSERT INTO `Medical_Note`(`condition_name`, `description`, `player`) VALUES ('Peanut allergy', 'allergic to peanuts', 3);
 /*************************************************************************************************/
 CREATE TABLE IF NOT EXISTS `Low_Fee`(
 	`id` BIGINT NOT NULL,
@@ -110,4 +137,6 @@ CREATE TABLE IF NOT EXISTS `User` (
 ALTER TABLE `User` ADD UNIQUE INDEX `unique_email` (`email_address`);
 
 INSERT INTO `User`(`email_address`, `password`, `first_name`, `surname`, `role`) VALUES ('joewemyss3@gmail.com', '$2a$04$ixT1MkSyNq.NVLyQMc.VWuAIivEjrW.8Tks/rycrVroN1nQVU9ijq', 'Joe', 'Wemyss', 1 );
+INSERT INTO `User`(`email_address`, `password`, `first_name`, `surname`, `role`) VALUES ('michellepower3@gmail.com', '$2a$04$ixT1MkSyNq.NVLyQMc.VWuAIivEjrW.8Tks/rycrVroN1nQVU9ijq', 'Michelle', 'Power', 2);
+INSERT INTO `User`(`email_address`, `password`, `first_name`, `surname`, `role`) VALUES ('agwemyss3@gmail.com', '$2a$04$ixT1MkSyNq.NVLyQMc.VWuAIivEjrW.8Tks/rycrVroN1nQVU9ijq', 'Agnes', 'Wemyss', 3);
 
