@@ -72,9 +72,9 @@ class JwtService
 	 * @param oldJwt the JWT to be validated
 	 * @return a new JWT
 	 */
-	String requestNewJwt(String oldJwt)
+	String requestNewJwt(String oldJwt, String requiredRole)
 	{
-		if (isJwtValid(oldJwt)) {
+		if (isJwtValid(oldJwt, requiredRole)) {
 			Map<String, String> details = getUsernameAndRole(oldJwt);
 			return requestJwt(details.get("user"), details.get("role"));
 		}
@@ -123,6 +123,27 @@ class JwtService
 	}
 
 	/**
+	 * Switch to route checking the required role to the correct method.
+	 *
+	 * @param actual the users role.
+	 * @param required the minimum role required.
+	 * @return true if the user has sufficient privileges, false otherwise
+	 */
+	private boolean checkRequiredRole(String actual, String  required){
+		required = required.toLowerCase();
+		switch(required){
+			case "admin":
+				return isAdmin(actual);
+			case "write":
+				return isWrite(actual);
+			case "read":
+				return isRead(actual);
+			default:
+				return false;
+		}
+	}
+
+	/**
 	 * This method wil check the validity of the claims contained in the JWT.
 	 *
 	 * @param claims   This will be the claims to be checked.
@@ -150,7 +171,7 @@ class JwtService
 	 * @param jwt the JWT to be verified
 	 * @return true if it is a valid JWT, false otherwise
 	 */
-	private boolean isJwtValid(String jwt)
+	private boolean isJwtValid(String jwt, String requiredRole)
 	{
 		logger.info("Checking jwt validity");
 		Claims claims = parseJwt(jwt);
@@ -158,12 +179,38 @@ class JwtService
 		logger.info("Current users role: " + role);
 		Map<String, String> required = new HashMap<>(1);
 		required.put("iss", "JavaTheNutt");
-		if (role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("read") || role.equalsIgnoreCase("write")) {
-			return checkJwtTime(claims) && checkClaims(claims, required);
-		}
-		throw new InvalidJwtException();
+		return checkJwtTime(claims) && checkClaims(claims, required) && checkRequiredRole(role, requiredRole);
 	}
 
+	/**
+	 * Check admin rights.
+	 *
+	 * @param role the users role
+	 * @return true if the user is an admin, false otherwise
+	 */
+	private boolean isAdmin(String role){
+		return role.equalsIgnoreCase("admin");
+	}
+
+	/**
+	 * Check admin/write privileges.
+	 *
+	 * @param role the users role
+	 * @return true if the user has admin or write privileges, false otherwise
+	 */
+	private boolean isWrite(String role){
+		return isAdmin(role) || role.equalsIgnoreCase("write");
+	}
+
+	/**
+	 * Check admin/write/read privileges.
+	 *
+	 * @param role the users role
+	 * @return true if the user has admin, write or read privileges, false otherwise
+	 */
+	private boolean isRead(String role){
+		return isWrite(role) || role.equalsIgnoreCase("read");
+	}
 	/**
 	 * Check if a JWT is expired or sent before it is allowed.
 	 *

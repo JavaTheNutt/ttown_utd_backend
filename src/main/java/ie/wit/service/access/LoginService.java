@@ -77,7 +77,6 @@ public class LoginService
 		String role = getUsersRole(user);
 		String jwt = jwtService.requestJwt(user.getEmailAddress(), role);
 		return new UserJwtTransfer(jwt, new UserOutDto(user));
-
 	}
 
 	/**
@@ -92,14 +91,44 @@ public class LoginService
 	}
 
 	/**
+	 * Fetch a jwt for a service that requires admin privileges
+	 *
+	 * @param oldJwt the old jwt
+	 * @return the new jwt
+	 */
+	public String fetchAdminJwt(String oldJwt){
+		return fetchNewJwt(oldJwt, "admin");
+	}
+
+	/**
+	 * Fetch a jwt for a service that requires read privileges
+	 *
+	 * @param oldJwt the old jwt
+	 * @return the new jwt
+	 */
+	public String fetchReadJwt(String oldJwt){
+		return fetchNewJwt(oldJwt, "read");
+	}
+
+	/**
+	 * Fetch a jwt for a service that requires write privileges
+	 *
+	 * @param oldJwt the old jwt
+	 * @return the new jwt
+	 */
+	public String fetchWriteJwt(String oldJwt){
+		return fetchNewJwt(oldJwt, "write");
+	}
+	/**
 	 * Validate a passed jwt and return a new one
 	 *
 	 * @param jwt the old JWT
+	 *            @param requiredRole the lowest role required for access
 	 * @return a new JWT
 	 */
-	public String validateAndRegenerateJwt(String jwt)
+	private String fetchNewJwt(String jwt, String requiredRole)
 	{
-		return jwtService.requestNewJwt(jwt);
+		return jwtService.requestNewJwt(jwt, requiredRole);
 	}
 
 	/**

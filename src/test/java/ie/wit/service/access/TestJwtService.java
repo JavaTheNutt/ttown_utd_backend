@@ -61,7 +61,7 @@ public class TestJwtService
 	public void testGetNewJwt()
 	{
 		String jwt = jwtService.requestJwt(USERNAME, ADMIN_ROLE);
-		String newJwt = jwtService.requestNewJwt(jwt);
+		String newJwt = jwtService.requestNewJwt(jwt, ADMIN_ROLE);
 		Map<String, String> details = jwtService.getUsernameAndRole(newJwt);
 		assertEquals("The username is incorrect", USERNAME, details.get("user"));
 		assertEquals("The Role is incorrect", ADMIN_ROLE, details.get("role"));
