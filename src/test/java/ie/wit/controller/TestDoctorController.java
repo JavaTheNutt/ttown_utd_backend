@@ -2,6 +2,7 @@ package ie.wit.controller;
 
 import ie.wit.model.dto.in.LoginDto;
 import ie.wit.model.dto.out.UserOutDto;
+import ie.wit.service.access.LoginService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This class tests the login controller
@@ -21,11 +23,13 @@ import static org.junit.Assert.assertNotNull;
 @SpringBootTest
 public class TestDoctorController
 {
+	@Autowired
 	private LoginService loginService;
+	@Autowired
 	private DoctorController doctorController;
-	
-	public TestDoctorController(LoginService loginService, DoctorController doctorController)
-	{
-	
+
+	@Test
+	public void test(){
+		assertTrue(true);
 	}
 }

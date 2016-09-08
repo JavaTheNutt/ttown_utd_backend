@@ -3,6 +3,7 @@ package ie.wit.service.access;
 import ie.wit.model.dto.in.LoginDto;
 import ie.wit.model.dto.temp_transfer.UserJwtTransfer;
 import ie.wit.model.entity.UserEntity;
+import ie.wit.model.enums.Role;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class TestLoginService
 			//create a user
 			UserEntity admin = new UserEntity(ADMIN_EMAIL_ADDRESS, PLAIN_PASSWORD, 1);
 			//create a set of login details based on the user
-			LoginDto loginDto = new LoginDto(user.getEmailAddress(), user.getPassword());
+			LoginDto loginDto = new LoginDto(admin.getEmailAddress(), admin.getPassword());
 			//add the user to the database
 			userService.addUser(admin);
 			//retrieve a JWT
@@ -56,7 +57,7 @@ public class TestLoginService
 			assertNotNull("The returned jwt is null", adminUserJwtTransfer);
 			//check that the JWT is valid
 			assertTrue("The JWT does not match", loginService.validateJwt(adminUserJwtTransfer.getJwt()));
-			assertEquals("Incorrect role returned", "ADMIN", Role.getStringValueFromInt(adminUserJwtTransfer.getUser().getRole()));
+			assertEquals("Incorrect role returned", "ADMIN", adminUserJwtTransfer.getUser().getRole());
 			assertEquals("The email address is incorrect", ADMIN_EMAIL_ADDRESS, adminUserJwtTransfer.getUser().getEmailAddress());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,11 +72,11 @@ public class TestLoginService
 	{
 		try{
 			UserEntity write = new UserEntity(WRITE_EMAIL_ADDRESS, PLAIN_PASSWORD, 2);
-			LoginDto loginDto = new LoginDto(user.getEmailAddress(), user.getPassword());
+			LoginDto loginDto = new LoginDto(write.getEmailAddress(), write.getPassword());
 			userService.addUser(write);
 			UserJwtTransfer writeUserJwtTransfer = loginService.login(loginDto);
 			
-			assertEquals("Incorrect Role returned", "WRITE", Role.getStringValueFromInt(writeUserJwtTransfer.getUser().getRole()));
+			assertEquals("Incorrect Role returned", "WRITE", writeUserJwtTransfer.getUser().getRole());
 		} catch(Exception e){
 			e.printStackTrace();
 		}finally {
@@ -87,11 +88,11 @@ public class TestLoginService
 	{
 		try{
 			UserEntity read = new UserEntity(READ_EMAIL_ADDRESS, PLAIN_PASSWORD, 2);
-			LoginDto loginDto = new LoginDto(user.getEmailAddress(), user.getPassword());
+			LoginDto loginDto = new LoginDto(read.getEmailAddress(), read.getPassword());
 			userService.addUser(read);
 			UserJwtTransfer readUserJwtTransfer = loginService.login(loginDto);
 			
-			assertEquals("Incorrect Role returned", "WRITE", Role.getStringValueFromInt(readUserJwtTransfer.getUser().getRole()));
+			assertEquals("Incorrect Role returned", "WRITE", readUserJwtTransfer.getUser().getRole());
 		} catch(Exception e){
 			e.printStackTrace();
 		}finally {
