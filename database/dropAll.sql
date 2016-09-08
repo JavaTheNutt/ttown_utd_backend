@@ -6,4 +6,6 @@ DROP TABLE player;
 DROP TABLE family;
 DROP TABLE doctor;
 DROP TABLE user;
+DROP TABLE team;
+DROP TABLE manager;
 DROP SCHEMA thomastown_utd_test;
