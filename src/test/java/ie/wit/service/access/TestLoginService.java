@@ -21,7 +21,9 @@ public class TestLoginService
 	/**
 	 * The email address to be used for testing
 	 */
-	private static final String EMAIL_ADDRESS = "joe.wemyss@gmail.com";
+	private static final String ADMIN_EMAIL_ADDRESS = "joe.wemyss@gmail.com";
+	private static final String WRITE_EMAIL_ADDRESS = "michelle.power@gmail.com";
+	private static final String READ_EMAIL_ADDRESS = "ag.wemyss@gmail.com";
 	/**
 	 * The password to be used for testing
 	 */
@@ -39,28 +41,61 @@ public class TestLoginService
 	 * This method will test the process of logging in
 	 */
 	@Test
-	public void testLogin()
+	public void testAdminLogin()
 	{
 		try {
 			//create a user
-			UserEntity user = new UserEntity(EMAIL_ADDRESS, PLAIN_PASSWORD, 1);
+			UserEntity admin = new UserEntity(ADMIN_EMAIL_ADDRESS, PLAIN_PASSWORD, 1);
 			//create a set of login details based on the user
 			LoginDto loginDto = new LoginDto(user.getEmailAddress(), user.getPassword());
 			//add the user to the database
-			userService.addUser(user);
+			userService.addUser(admin);
 			//retrieve a JWT
-			UserJwtTransfer userJwtTransfer = loginService.login(loginDto);
+			UserJwtTransfer adminUserJwtTransfer = loginService.login(loginDto);
 			//assert that the JWT is not null
-			assertNotNull("The returned jwt is null", userJwtTransfer);
+			assertNotNull("The returned jwt is null", adminUserJwtTransfer);
 			//check that the JWT is valid
-			assertTrue("The JWT does not match", loginService.validateJwt(userJwtTransfer.getJwt()));
-			assertEquals("The email address is incorrect", EMAIL_ADDRESS, userJwtTransfer.getUser().getEmailAddress());
+			assertTrue("The JWT does not match", loginService.validateJwt(adminUserJwtTransfer.getJwt()));
+			assertEquals("Incorrect role returned", "ADMIN", Role.getStringValueFromInt(adminUserJwtTransfer.getUser().getRole()));
+			assertEquals("The email address is incorrect", ADMIN_EMAIL_ADDRESS, adminUserJwtTransfer.getUser().getEmailAddress());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			//delete the created user
-			userService.deleteUser(EMAIL_ADDRESS);
+			userService.deleteUser(ADMIN_EMAIL_ADDRESS);
 		}
 	}
-
+	
+	@Test
+	public void testWriteLogin()
+	{
+		try{
+			UserEntity write = new UserEntity(WRITE_EMAIL_ADDRESS, PLAIN_PASSWORD, 2);
+			LoginDto loginDto = new LoginDto(user.getEmailAddress(), user.getPassword());
+			userService.addUser(write);
+			UserJwtTransfer writeUserJwtTransfer = loginService.login(loginDto);
+			
+			assertEquals("Incorrect Role returned", "WRITE", Role.getStringValueFromInt(writeUserJwtTransfer.getUser().getRole()));
+		} catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			userService.deleteUser(WRITE_EMAIL_ADDRESS);
+		}
+	}
+	@Test
+	public void testReadLogin()
+	{
+		try{
+			UserEntity read = new UserEntity(READ_EMAIL_ADDRESS, PLAIN_PASSWORD, 2);
+			LoginDto loginDto = new LoginDto(user.getEmailAddress(), user.getPassword());
+			userService.addUser(read);
+			UserJwtTransfer readUserJwtTransfer = loginService.login(loginDto);
+			
+			assertEquals("Incorrect Role returned", "WRITE", Role.getStringValueFromInt(readUserJwtTransfer.getUser().getRole()));
+		} catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			userService.deleteUser(READ_EMAIL_ADDRESS);
+		}
+	}
 }
