@@ -152,7 +152,9 @@ CREATE TABLE IF NOT EXISTS `Manager`(
 	`town_address` VARCHAR(30) NOT NULL DEFAULT 'Thomastown',
 	`email_address` VARCHAR(30),
 	`contact_number` VARCHAR(30) NOT NULL,
-	CONSTRAINT `manager_pk` PRIMARY KEY `Manager`(`id`)
+	`team` BIGINT,
+	CONSTRAINT `manager_pk` PRIMARY KEY `Manager`(`id`),
+	CONSTRAINT `manager_team_fk` FOREIGN KEY `Manager`(`team`) REFERENCES `Team`(`id`)
 );
 ALTER TABLE `Manager` ADD UNIQUE INDEX `unique_manager_email` (`email_address`);
 INSERT INTO `Manager`(`first_name`, `surname`, `street_address`, `town_address`, `email_address`, `contact_number`) VALUES(
@@ -163,3 +165,22 @@ INSERT INTO `Manager`(`first_name`, `surname`, `street_address`, `town_address`,
 	'joe@bloggs.com',
 	'087654321'
 );
+
+***********************************************************************
+/*this table will represent a team. The team rank will act as an imaginary foreign key which will represent a one-to-many relationship with players based on their age, which is calculated at the application level*/
+CREATE TABLE IF NOT EXISTS `Team`{
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`age_rank` INT NOT NULL,
+	`name` VARCHAR(15) NOT NULL
+}
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(7, "U-8");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(8, "U-9");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(9, "U-10");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(10, "U-11");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(11, "U-12");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(12, "U-13");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(13, "U-14");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(14, "U-15");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(15, "U-16");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(16, "U-17");
+INSERT INTO `Team` (`age_rank`, `name`) VALUES(17, "Junior");
