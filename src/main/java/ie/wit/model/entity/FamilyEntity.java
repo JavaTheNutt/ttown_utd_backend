@@ -51,6 +51,18 @@ public class FamilyEntity{
 	@Column(name = "doctor")
 	private Long doctor;
 	
-	//todo constructor, getters and setters 
+	//todo getters and setters 
 	
+	public FamilyInDto(){
+		
+	}
+	
+	public FamilyInDto(String familyName, String streetAddress, String townAddress, Float paidSoFar, Boolean willingToVolunteer, Long doctor){
+		this.familyName = familyName;
+		this.streetAddress - streetAddress;
+		this.townAddress = townAddress;
+		this.paidSoFar = paidSoFar;
+		this.willingToVolunteer = willingToVolunteer;
+		this.doctor = doctor;
+	}
 }
