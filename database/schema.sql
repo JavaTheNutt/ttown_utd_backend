@@ -171,17 +171,28 @@ CREATE TABLE IF NOT EXISTS `Team` (
 	`name`     VARCHAR(15) NOT NULL,
 	CONSTRAINT `team_pk` PRIMARY KEY `Team`(`id`)
 );
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (7, 'U-8');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (8, 'U-9');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (9, 'U-10');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (10, 'U-11');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (11, 'U-12');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (12, 'U-13');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (13, 'U-14');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (14, 'U-15');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (15, 'U-16');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (16, 'U-17');
-INSERT INTO `Team` (`age_rank`, `name`) VALUES (17, 'Junior');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (7, 'U-8M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (7, 'U-8F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (8, 'U-9M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (8, 'U-9F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (9, 'U-10M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (9, 'U-10F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (10, 'U-11M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (10, 'U-11F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (11, 'U-12M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (11, 'U-12F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (12, 'U-13M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (12, 'U-13F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (13, 'U-14M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (13, 'U-14F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (14, 'U-15M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (14, 'U-15F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (15, 'U-16M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (14, 'U-16F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (16, 'U-17M');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (16, 'U-17F');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (17, 'JuniorM');
+INSERT INTO `Team` (`age_rank`, `name`) VALUES (17, 'JuniorF');
 /********************************************************************/
 CREATE TABLE IF NOT EXISTS `Manager` (
 	`id`             BIGINT      NOT NULL AUTO_INCREMENT,
@@ -199,15 +210,55 @@ CREATE TABLE IF NOT EXISTS `Manager` (
 );
 ALTER TABLE `Manager`
 	ADD UNIQUE INDEX `unique_manager_email` (`email_address`);
-INSERT INTO `Manager` (`first_name`, `surname`, `street_address`, `town_address`, `email_address`, `contact_number`)
+INSERT INTO `Manager` (`first_name`, `surname`, `street_address`, `town_address`, `email_address`, `contact_number`, `team`)
 VALUES (
 	'Joe',
 	'Bloggs',
 	'Mill Street',
 	'Thomastown',
 	'joe@bloggs.com',
-	'087654321'
+	'087654321',
+	1
 );
-
+INSERT INTO `Manager` (`first_name`, `surname`, `street_address`, `town_address`, `email_address`, `contact_number`, `team`)
+VALUES (
+	'John',
+	'Bloggs',
+	'Mill Street',
+	'Thomastown',
+	'john@bloggs.com',
+	'087654321',
+	1
+);
+INSERT INTO `Manager` (`first_name`, `surname`, `street_address`, `town_address`, `email_address`, `contact_number`, `team`)
+VALUES (
+	'Jason',
+	'Bloggs',
+	'Mill Street',
+	'Thomastown',
+	'john@bloggs.com',
+	'087654321',
+	2
+);
 /***********************************************************************/
+CREATE TABLE IF NOT EXISTS `Opponent`(
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(20) NOT NULL,
+	`pitch` VARCHAR(20),
+	CONSTRAINT `opponent_pk` PRIMARY KEY `Opponent`(`id`)
+);
+ALTER TABLE `Opponent` ADD UNIQUE INDEX `unique_opponent_name` (`name`);
+ALTER TABLE `Opponent` ADD UNIQUE INDEX `unique_opponent_pitch`(`pitch`);
 
+/************************************************************************/
+
+CREATE TABLE IF NOT EXISTS `Fixture`(
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`at_home` BOOLEAN NOT NULL DEFAULT TRUE,
+	`date_of_match` DATE NOT NULL,
+	`team` BIGINT NOT NULL,
+	`opponent` BIGINT NOT NULL,
+	CONSTRAINT `fixture_pk` PRIMARY KEY `Fixture`(`id`),
+	CONSTRAINT `fixture_team_fk` FOREIGN KEY `Fixture`(`team`) REFERENCES `Team`(`id`),
+	CONSTRAINT `fixture_opponent_fk` FOREIGN KEY `Fixture`(`opponent`) REFERENCES `Opponent`(`id`)
+)
