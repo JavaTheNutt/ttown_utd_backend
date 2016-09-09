@@ -8,4 +8,6 @@ DROP TABLE doctor;
 DROP TABLE user;
 DROP TABLE team;
 DROP TABLE manager;
+DROP TABLE opponent;
+DROP TABLE fixture;
 DROP SCHEMA thomastown_utd_test;
