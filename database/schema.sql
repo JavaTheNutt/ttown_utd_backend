@@ -257,8 +257,8 @@ CREATE TABLE IF NOT EXISTS `Fixture`(
 	`at_home` BOOLEAN NOT NULL DEFAULT TRUE,
 	`date_of_match` DATE NOT NULL,
 	`team` BIGINT NOT NULL,
-	`opponent` BIGINT NOT NULL,
+	`opponent` BIGINT,
 	CONSTRAINT `fixture_pk` PRIMARY KEY `Fixture`(`id`),
-	CONSTRAINT `fixture_team_fk` FOREIGN KEY `Fixture`(`team`) REFERENCES `Team`(`id`),
-	CONSTRAINT `fixture_opponent_fk` FOREIGN KEY `Fixture`(`opponent`) REFERENCES `Opponent`(`id`)
+	CONSTRAINT `fixture_team_fk` FOREIGN KEY `Fixture`(`team`) REFERENCES `Team`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT `fixture_opponent_fk` FOREIGN KEY `Fixture`(`opponent`) REFERENCES `Opponent`(`id`) ON UPDATE CASCADE ON DELETE SET NULL
 )
