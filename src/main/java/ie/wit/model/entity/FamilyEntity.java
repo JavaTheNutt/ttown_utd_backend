@@ -1,7 +1,10 @@
 package ie.wit.model.entity;
+
+import javax.persistence.*;
+
 /**
  * This class represents a family that JPA will persist to the database.
- * 
+ *
  * @author Joe Wemyss
  */
 @Entity
@@ -52,17 +55,170 @@ public class FamilyEntity{
 	private Long doctor;
 	
 	//todo getters and setters 
-	
-	public FamilyInDto(){
+
+	/**
+	 * Instantiates a new Family entity.
+	 */
+	public FamilyEntity(){
 		
 	}
-	
-	public FamilyInDto(String familyName, String streetAddress, String townAddress, Float paidSoFar, Boolean willingToVolunteer, Long doctor){
+
+	/**
+	 * Instantiates a new Family entity.
+	 *
+	 * @param familyName         the family name
+	 * @param streetAddress      the street address
+	 * @param townAddress        the town address
+	 * @param paidSoFar          the paid so far
+	 * @param willingToVolunteer the willing to volunteer
+	 * @param doctor             the doctor
+	 */
+	public FamilyEntity(String familyName, String streetAddress, String townAddress, Float paidSoFar, Boolean willingToVolunteer, Long doctor){
 		this.familyName = familyName;
-		this.streetAddress - streetAddress;
+		this.streetAddress = streetAddress;
 		this.townAddress = townAddress;
 		this.paidSoFar = paidSoFar;
 		this.willingToVolunteer = willingToVolunteer;
+		this.doctor = doctor;
+	}
+
+	/**
+	 * Gets id.
+	 *
+	 * @return the id
+	 */
+	public Long getId()
+	{
+		return id;
+	}
+
+	/**
+	 * Sets id.
+	 *
+	 * @param id the id
+	 */
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	/**
+	 * Gets family name.
+	 *
+	 * @return the family name
+	 */
+	public String getFamilyName()
+	{
+		return familyName;
+	}
+
+	/**
+	 * Sets family name.
+	 *
+	 * @param familyName the family name
+	 */
+	public void setFamilyName(String familyName)
+	{
+		this.familyName = familyName;
+	}
+
+	/**
+	 * Gets street address.
+	 *
+	 * @return the street address
+	 */
+	public String getStreetAddress()
+	{
+		return streetAddress;
+	}
+
+	/**
+	 * Sets street address.
+	 *
+	 * @param streetAddress the street address
+	 */
+	public void setStreetAddress(String streetAddress)
+	{
+		this.streetAddress = streetAddress;
+	}
+
+	/**
+	 * Gets town address.
+	 *
+	 * @return the town address
+	 */
+	public String getTownAddress()
+	{
+		return townAddress;
+	}
+
+	/**
+	 * Sets town address.
+	 *
+	 * @param townAddress the town address
+	 */
+	public void setTownAddress(String townAddress)
+	{
+		this.townAddress = townAddress;
+	}
+
+	/**
+	 * Gets paid so far.
+	 *
+	 * @return the paid so far
+	 */
+	public Float getPaidSoFar()
+	{
+		return paidSoFar;
+	}
+
+	/**
+	 * Sets paid so far.
+	 *
+	 * @param paidSoFar the paid so far
+	 */
+	public void setPaidSoFar(Float paidSoFar)
+	{
+		this.paidSoFar = paidSoFar;
+	}
+
+	/**
+	 * Gets willing to volunteer.
+	 *
+	 * @return the willing to volunteer
+	 */
+	public Boolean getWillingToVolunteer()
+	{
+		return willingToVolunteer;
+	}
+
+	/**
+	 * Sets willing to volunteer.
+	 *
+	 * @param willingToVolunteer the willing to volunteer
+	 */
+	public void setWillingToVolunteer(Boolean willingToVolunteer)
+	{
+		this.willingToVolunteer = willingToVolunteer;
+	}
+
+	/**
+	 * Gets doctor.
+	 *
+	 * @return the doctor
+	 */
+	public Long getDoctor()
+	{
+		return doctor;
+	}
+
+	/**
+	 * Sets doctor.
+	 *
+	 * @param doctor the doctor
+	 */
+	public void setDoctor(Long doctor)
+	{
 		this.doctor = doctor;
 	}
 }

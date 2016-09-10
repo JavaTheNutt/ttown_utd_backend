@@ -1,5 +1,10 @@
 package ie.wit.model.dto.in;
 
+import ie.wit.model.entity.FamilyEntity;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+
 public class FamilyInDto{
 	@NotNull
 	@NotEmpty
@@ -32,7 +37,7 @@ public class FamilyInDto{
 		this.townAddress = townAddress;
 	}
 	public Float getPaidSoFar(){
-		return paidSoFar >= 0.0 ? paidSoFar : 0.0;
+		return paidSoFar >= 0.0 ? paidSoFar : Float.valueOf(0);
 	}
 	public void makePayment(Float amount){
 		paidSoFar += amount;

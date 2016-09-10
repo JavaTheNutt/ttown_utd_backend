@@ -236,29 +236,35 @@ VALUES (
 	'Bloggs',
 	'Mill Street',
 	'Thomastown',
-	'john@bloggs.com',
+	'jason@bloggs.com',
 	'087654321',
 	2
 );
 /***********************************************************************/
-CREATE TABLE IF NOT EXISTS `Opponent`(
-	`id` BIGINT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Opponent` (
+	`id`    BIGINT      NOT NULL AUTO_INCREMENT,
+	`name`  VARCHAR(20) NOT NULL,
 	`pitch` VARCHAR(20),
 	CONSTRAINT `opponent_pk` PRIMARY KEY `Opponent`(`id`)
 );
-ALTER TABLE `Opponent` ADD UNIQUE INDEX `unique_opponent_name` (`name`);
-ALTER TABLE `Opponent` ADD UNIQUE INDEX `unique_opponent_pitch`(`pitch`);
+ALTER TABLE `Opponent`
+	ADD UNIQUE INDEX `unique_opponent_name` (`name`);
+ALTER TABLE `Opponent`
+	ADD UNIQUE INDEX `unique_opponent_pitch`(`pitch`);
 
 /************************************************************************/
 
-CREATE TABLE IF NOT EXISTS `Fixture`(
-	`id` BIGINT NOT NULL AUTO_INCREMENT,
-	`at_home` BOOLEAN NOT NULL DEFAULT TRUE,
-	`date_of_match` DATE NOT NULL,
-	`team` BIGINT NOT NULL,
-	`opponent` BIGINT,
+CREATE TABLE IF NOT EXISTS `Fixture` (
+	`id`            BIGINT  NOT NULL AUTO_INCREMENT,
+	`at_home`       BOOLEAN NOT NULL DEFAULT TRUE,
+	`date_of_match` DATE    NOT NULL,
+	`team`          BIGINT  NOT NULL,
+	`opponent`      BIGINT,
 	CONSTRAINT `fixture_pk` PRIMARY KEY `Fixture`(`id`),
-	CONSTRAINT `fixture_team_fk` FOREIGN KEY `Fixture`(`team`) REFERENCES `Team`(`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT `fixture_opponent_fk` FOREIGN KEY `Fixture`(`opponent`) REFERENCES `Opponent`(`id`) ON UPDATE CASCADE ON DELETE SET NULL
+	CONSTRAINT `fixture_team_fk` FOREIGN KEY `Fixture`(`team`) REFERENCES `Team` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	CONSTRAINT `fixture_opponent_fk` FOREIGN KEY `Fixture`(`opponent`) REFERENCES `Opponent` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE SET NULL
 )
